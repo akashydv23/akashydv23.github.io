@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Akash Yadav's Journal — Volume I, 2026</title>
+  <meta name="description" content="Akash Yadav — A personal journal of work, ideas and growth. Problems · Decisions · People · Impact." />
+  <meta property="og:title" content="Akash Yadav's Journal" />
+  <meta property="og:description" content="Volume I · 2026 · Strategy · Product · Analytics" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,800;0,900;1,400;1,700&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&family=IM+Fell+English:ital@0;1&family=UnifrakturMaguntia&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { parchment: '#f4f1ea', ink: '#1a1a1a' },
+          fontFamily: {
+            masthead: ['"UnifrakturMaguntia"','serif'],
+            headline: ['"Playfair Display"','Georgia','serif'],
+            body: ['"Merriweather"','Georgia','serif'],
+            fell: ['"IM Fell English"','Georgia','serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: #f4f1ea; color: #1a1a1a;
+      font-family: 'Merriweather', Georgia, serif;
+      margin: 0; padding: 0;
+      background-image: repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(0,0,0,0.011) 27px, rgba(0,0,0,0.011) 28px);
+    }
+    body::after {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9998; opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat; background-size: 200px 200px;
+    }
+
+    /* ===== PROGRESS BAR ===== */
+    #progress-bar { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: #1a1a1a; z-index: 10001; transition: width 0.08s linear; }
+
+    /* ===== TICKER ===== */
+    .ticker-outer { background: #1a1a1a; color: #f4f1ea; overflow: hidden; height: 32px; display: flex; align-items: center; }
+    .ticker-label { font-family: 'Playfair Display', serif; font-size: 0.6rem; font-weight: 900; letter-spacing: 0.18em; text-transform: uppercase; background: #c8a84b; color: #1a1a1a; padding: 0 14px; height: 100%; display: flex; align-items: center; flex-shrink: 0; border-right: 2px solid rgba(255,255,255,0.2); white-space: nowrap; }
+    .ticker-track-wrapper { flex: 1; overflow: hidden; height: 100%; display: flex; align-items: center; }
+    .ticker-track { display: flex; align-items: center; animation: ticker-scroll 120s linear infinite; white-space: nowrap; }
+    .ticker-track:hover { animation-play-state: paused; }
+    .ticker-item { font-family: 'Merriweather', serif; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; white-space: nowrap; padding: 0 3rem; }
+    .ticker-item::before { content: '\25C6  '; opacity: 0.6; }
+    @keyframes ticker-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    /* ===== CHAPTER NAV ===== */
+    #chapter-nav { position: sticky; top: 0; z-index: 999; background: #f4f1ea; border-top: 2px solid #1a1a1a; border-bottom: 2px solid #1a1a1a; }
+    .chapter-nav-inner { display: flex; justify-content: center; flex-wrap: wrap; max-width: 1280px; margin: 0 auto; }
+    .chapter-nav-btn { display: flex; align-items: center; gap: 6px; padding: 7px 15px; border: none; border-right: 1px solid rgba(0,0,0,0.15); background: transparent; cursor: pointer; color: #1a1a1a; transition: background 0.18s ease, color 0.18s ease; white-space: nowrap; }
+    .chapter-nav-btn:first-child { border-left: 1px solid rgba(0,0,0,0.15); }
+    .chapter-num-badge { font-family: 'Merriweather', serif; font-size: 0.49rem; font-weight: 700; letter-spacing: 0.06em; opacity: 0.4; }
+    .chapter-nav-name { font-family: 'Playfair Display', serif; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
+    .chapter-nav-btn:hover, .chapter-nav-btn.active-nav { background: #1a1a1a; color: #f4f1ea; }
+    .chapter-nav-btn.active-nav .chapter-num-badge { opacity: 0.6; }
+
+    /* ===== MULTI-PAGE SYSTEM ===== */
+    .pages-container { position: relative; }
+    .page-section { display: none; opacity: 0; transform: translateY(14px); transition: opacity 0.38s ease, transform 0.38s ease; padding: 2.5rem 0 6rem; min-height: calc(100vh - 110px); }
+    .page-section.active { display: block; }
+    .page-section.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== JOURNAL MASTHEAD ===== */
+    .journal-name-sup { font-family: 'Playfair Display', serif; font-size: clamp(0.85rem, 2.6vw, 1.35rem); font-weight: 700; letter-spacing: 0.4em; text-transform: uppercase; }
+    .journal-title { font-family: 'UnifrakturMaguntia', serif; font-size: clamp(4rem, 13vw, 9.5rem); line-height: 0.9; text-shadow: 2px 2px 0 rgba(0,0,0,0.07); }
+    .journal-tagline { font-family: 'IM Fell English', serif; font-style: italic; font-size: clamp(0.8rem, 1.8vw, 1.05rem); }
+
+    /* ===== TOC CARDS ===== */
+    .toc-card { border: 1px solid #1a1a1a; padding: 0.95rem 1rem; cursor: pointer; transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease; background: rgba(0,0,0,0.007); }
+    .toc-card:hover { background: rgba(0,0,0,0.032); transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.09); }
+    .toc-card-num { font-family: 'Merriweather', serif; font-size: 0.51rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.38; margin-bottom: 0.3rem; }
+    .toc-card-title { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 0.88rem; line-height: 1.22; }
+    .toc-card-desc { font-family: 'Merriweather', serif; font-size: 0.57rem; line-height: 1.62; color: #3a3a3a; margin-top: 0.32rem; font-style: italic; }
+    .toc-card-action { font-family: 'Merriweather', serif; font-size: 0.51rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 0.5rem; opacity: 0.38; }
+
+    /* ===== PAGE DOTS ===== */
+    .page-dots { position: fixed; bottom: 1.4rem; left: 50%; transform: translateX(-50%); display: flex; gap: 7px; z-index: 4998; background: rgba(244,241,234,0.88); padding: 6px 13px; border: 1px solid rgba(0,0,0,0.12); }
+    .page-dot { width: 8px; height: 8px; border: 1.5px solid #1a1a1a; background: transparent; cursor: pointer; transition: background 0.18s ease, transform 0.18s ease; }
+    .page-dot:hover { transform: scale(1.3); }
+    .page-dot.active-dot { background: #1a1a1a; }
+
+    /* ===== RULES ===== */
+    .double-rule { border-top: 3px solid #000; border-bottom: 1px solid #000; padding-top: 3px; }
+    .triple-rule { border-top: 5px solid #000; border-bottom: 1px solid #000; padding-top: 3px; }
+
+    /* ===== TYPOGRAPHY ===== */
+    .drop-cap::first-letter { float: left; font-family: 'Playfair Display', serif; font-size: 5.2em; line-height: 0.75; margin: 0.05em 0.08em 0 0; font-weight: 900; }
+    .article-kicker { font-family: 'Merriweather', serif; font-size: 0.63rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; border-bottom: 1px solid #1a1a1a; display: inline-block; padding-bottom: 2px; }
+    .article-headline { font-family: 'Playfair Display', serif; font-weight: 900; line-height: 1.1; }
+    .article-deck { font-family: 'Merriweather', serif; font-style: italic; font-weight: 300; line-height: 1.55; color: #3a3a3a; }
+    .article-byline { font-family: 'Merriweather', serif; font-size: 0.63rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #3a3a3a; }
+    .article-body { font-family: 'Merriweather', serif; font-size: 0.82rem; line-height: 1.9; text-align: justify; }
+    .masthead-subtitle { font-family: 'Playfair Display', serif; font-size: clamp(0.54rem, 1.2vw, 0.76rem); letter-spacing: 0.18em; text-transform: uppercase; }
+
+    /* ===== SECTION LABELS ===== */
+    .section-label { font-family: 'Playfair Display', serif; font-size: clamp(1rem, 3.5vw, 1.8rem); font-weight: 900; letter-spacing: 0.06em; text-transform: uppercase; text-align: center; background: #1a1a1a; color: #f4f1ea; padding: 0.35rem 1rem; display: block; }
+    .section-label-outline { font-family: 'Playfair Display', serif; font-size: clamp(0.65rem, 1.7vw, 0.92rem); font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; text-align: center; border: 2px solid #1a1a1a; padding: 0.2rem 1.2rem; display: inline-block; }
+    .chapter-label { font-family: 'Merriweather', serif; font-size: 0.58rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; opacity: 0.42; display: block; margin-bottom: 0.2rem; }
+
+    /* ===== PULL QUOTE ===== */
+    .pull-quote { font-family: 'Playfair Display', serif; font-size: clamp(0.9rem, 2vw, 1.2rem); font-style: italic; font-weight: 700; line-height: 1.45; text-align: center; border-top: 2px solid #1a1a1a; border-bottom: 2px solid #1a1a1a; padding: 0.8rem 0.6rem; margin: 1rem 0; }
+
+    /* ===== ORNAMENT ===== */
+    .ornament-divider { text-align: center; font-size: 1rem; letter-spacing: 0.4em; padding: 0.3rem 0; }
+
+    /* ===== STAT BADGE ===== */
+    .stat-badge { border: 2px solid #1a1a1a; display: inline-flex; flex-direction: column; align-items: center; justify-content: center; padding: 0.45rem 0.65rem; min-width: 72px; text-align: center; transition: background 0.2s ease, color 0.2s ease; }
+    .stat-badge:hover { background: #1a1a1a; color: #f4f1ea; }
+    .stat-badge .stat-num { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 1.5rem; line-height: 1; }
+    .stat-badge .stat-label { font-family: 'Merriweather', serif; font-size: 0.52rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; line-height: 1.3; margin-top: 0.2rem; }
+
+    /* ===== CLASSIFIEDS / INFO BOXES ===== */
+    .classifieds-box { border: 2px solid #1a1a1a; padding: 0.8rem; background: rgba(0,0,0,0.018); }
+    .classifieds-header { font-family: 'Playfair Display', serif; font-weight: 900; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid #1a1a1a; padding-bottom: 0.28rem; margin-bottom: 0.5rem; }
+    .ad-box { border: 3px double #1a1a1a; padding: 1rem; text-align: center; background: rgba(0,0,0,0.012); }
+
+    /* ===== WEATHER / DOSSIER BOX ===== */
+    .weather-box { border: 2px solid #1a1a1a; background: rgba(0,0,0,0.018); }
+    .weather-row { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; padding: 0.38rem 0.6rem; border-bottom: 1px dashed rgba(0,0,0,0.18); }
+    .weather-row:last-child { border-bottom: none; }
+    .weather-key { font-family: 'Merriweather', serif; font-size: 0.56rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; flex-shrink: 0; }
+    .weather-val { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.75rem; text-align: right; }
+
+    /* ===== SKILL TAGS ===== */
+    .skill-tag { display: inline-block; border: 1.5px solid #1a1a1a; font-size: 0.59rem; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; padding: 3px 9px; font-family: 'Merriweather', serif; cursor: default; transition: background 0.14s ease, color 0.14s ease, transform 0.14s ease; user-select: none; }
+    .skill-tag:hover { background: #1a1a1a; color: #f4f1ea; transform: rotate(-1deg) scale(1.06); }
+
+    /* ===== SKILL CATEGORY HEADING ===== */
+    .skill-cat-head { font-family: 'Playfair Display', serif; font-size: 0.7rem; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; border-bottom: 1.5px solid #1a1a1a; padding-bottom: 3px; margin-bottom: 0.55rem; margin-top: 1.2rem; }
+    .skill-cat-head:first-child { margin-top: 0; }
+
+    /* ===== STORY CARD ===== */
+    .story-card { cursor: pointer; transition: background 0.22s ease, box-shadow 0.22s ease, transform 0.2s ease; position: relative; }
+    .story-card:hover { background: rgba(0,0,0,0.025); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1), 0 4px 22px rgba(0,0,0,0.08); transform: translateY(-2px); }
+    .story-card::after { content: 'Open Full Entry \2197'; position: absolute; bottom: 0.75rem; right: 1rem; font-family: 'Playfair Display', serif; font-size: 0.56rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0; transition: opacity 0.2s ease; background: #1a1a1a; color: #f4f1ea; padding: 3px 10px; }
+    .story-card:hover::after { opacity: 1; }
+
+    /* ===== READ BUTTON ===== */
+    .read-btn { display: inline-flex; align-items: center; gap: 6px; font-family: 'Playfair Display', serif; font-size: 0.63rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; border: 2px solid #1a1a1a; padding: 6px 16px; cursor: pointer; background: transparent; color: #1a1a1a; margin-top: 1rem; transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease; user-select: none; }
+    .read-btn:hover { background: #1a1a1a; color: #f4f1ea; transform: translate(-2px,-2px); box-shadow: 3px 3px 0 rgba(0,0,0,0.28); }
+
+    /* ===== METADATA BAR ===== */
+    .metadata-bar { display: flex; flex-wrap: wrap; border: 1px solid #1a1a1a; border-top: none; margin-bottom: 1.25rem; background: rgba(0,0,0,0.015); }
+    .meta-item { display: flex; align-items: baseline; padding: 0.3rem 0.85rem; border-right: 1px solid rgba(0,0,0,0.18); gap: 0.4rem; }
+    .meta-item:last-child { border-right: none; }
+    .meta-key { font-family: 'Merriweather', serif; font-size: 0.51rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: #3a3a3a; white-space: nowrap; }
+    .meta-val { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.73rem; }
+
+    /* ===== READ ALSO ===== */
+    .read-also-strip { display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem 1.2rem; border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a; padding: 0.5rem 0.75rem; background: rgba(0,0,0,0.015); }
+    .read-also-label { font-family: 'Playfair Display', serif; font-size: 0.57rem; font-weight: 900; letter-spacing: 0.2em; text-transform: uppercase; background: #1a1a1a; color: #f4f1ea; padding: 3px 10px; white-space: nowrap; flex-shrink: 0; }
+    .read-also-item { font-family: 'Merriweather', serif; font-size: 0.62rem; font-weight: 700; text-decoration: none; color: #1a1a1a; border-bottom: 1px solid #1a1a1a; padding-bottom: 1px; transition: opacity 0.18s ease; cursor: pointer; }
+    .read-also-item:hover { opacity: 0.42; }
+
+    /* ===== FADE-UP ===== */
+    .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== CONTACT LINKS ===== */
+    .contact-link-row { display: flex; align-items: baseline; gap: 0.75rem; padding: 0.65rem 0; border-bottom: 1px dashed rgba(0,0,0,0.18); }
+    .contact-link-row:last-child { border-bottom: none; }
+    .contact-key { font-family: 'Merriweather', serif; font-size: 0.54rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; opacity: 0.45; flex-shrink: 0; width: 70px; }
+    .contact-val { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.88rem; }
+    .contact-val a { color: #1a1a1a; text-decoration: none; border-bottom: 1px solid rgba(0,0,0,0.28); transition: opacity 0.18s ease; }
+    .contact-val a:hover { opacity: 0.45; }
+
+    /* ===== EDITOR'S QUOTE ===== */
+    .editors-quote-wrap { border: 3px double #1a1a1a; padding: 2.5rem 3rem; text-align: center; background: rgba(0,0,0,0.018); position: relative; overflow: hidden; }
+    .editors-quote-wrap::before { content: '\201C'; font-family: 'Playfair Display', serif; font-size: 11rem; font-weight: 900; color: rgba(0,0,0,0.04); position: absolute; top: -3rem; left: 0.3rem; line-height: 1; pointer-events: none; }
+    .editors-quote-text { font-family: 'Playfair Display', serif; font-size: clamp(0.98rem, 2.1vw, 1.38rem); font-style: italic; font-weight: 700; line-height: 1.65; position: relative; z-index: 1; }
+    .editors-quote-attr { font-family: 'Merriweather', serif; font-size: 0.63rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; margin-top: 1.2rem; opacity: 0.55; position: relative; z-index: 1; }
+
+    /* ===== STEP LIST ===== */
+    .step-list { list-style: none; padding: 0; margin: 0; }
+    .step-list li { display: flex; align-items: baseline; gap: 0.75rem; padding: 0.5rem 0; border-bottom: 1px dashed rgba(0,0,0,0.15); font-family: 'Merriweather', serif; font-size: 0.75rem; line-height: 1.7; }
+    .step-list li:last-child { border-bottom: none; }
+    .step-num { font-family: 'Playfair Display', serif; font-weight: 900; font-size: 0.56rem; letter-spacing: 0.12em; flex-shrink: 0; opacity: 0.38; min-width: 28px; }
+
+    /* ===== AI DESK TABLE ===== */
+    .ai-desk-table { width: 100%; border-collapse: collapse; }
+    .ai-desk-table td { padding: 0.42rem 0.7rem; border-bottom: 1px dashed rgba(0,0,0,0.15); font-family: 'Merriweather', serif; font-size: 0.7rem; vertical-align: top; line-height: 1.65; }
+    .ai-desk-table td:first-child { font-weight: 700; font-size: 0.6rem; letter-spacing: 0.07em; white-space: nowrap; border-right: 1px solid rgba(0,0,0,0.15); width: 38%; }
+    .ai-desk-table tr:last-child td { border-bottom: none; }
+
+    /* ===== IMAGES ===== */
+    .masthead-img { width: 100%; height: auto; display: block; opacity: 0.82; mix-blend-mode: multiply; }
+
+    /* ===== PRINT BUTTON ===== */
+    #print-btn { position: fixed; bottom: 2rem; right: 2rem; z-index: 5000; background: #1a1a1a; color: #f4f1ea; border: 2px solid #1a1a1a; cursor: pointer; font-family: 'Playfair Display', serif; font-weight: 700; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; padding: 9px 16px; display: flex; align-items: center; gap: 7px; box-shadow: 3px 3px 0 rgba(0,0,0,0.2); transition: all 0.15s ease; }
+    #print-btn:hover { background: #f4f1ea; color: #1a1a1a; transform: translate(-2px,-2px); box-shadow: 5px 5px 0 rgba(0,0,0,0.2); }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #e8e4d9; }
+    ::-webkit-scrollbar-thumb { background: #1a1a1a; }
+
+    /* ===================================================
+       SPREAD OVERLAY — Netflix / Hotstar Panel
+    =================================================== */
+    #spread-overlay { position: fixed; inset: 0; z-index: 20000; pointer-events: none; display: flex; align-items: flex-end; justify-content: center; }
+    #spread-overlay.active { pointer-events: all; }
+    #spread-backdrop { position: absolute; inset: 0; background: rgba(10,10,10,0.68); backdrop-filter: blur(4px) brightness(0.6); -webkit-backdrop-filter: blur(4px) brightness(0.6); opacity: 0; transition: opacity 0.38s ease; cursor: pointer; }
+    #spread-overlay.active #spread-backdrop { opacity: 1; }
+    #spread-panel { position: relative; z-index: 1; width: min(96vw,1240px); height: 90vh; background: #f4f1ea; border: 2px solid #1a1a1a; border-bottom: none; border-top: 5px solid #1a1a1a; box-shadow: 0 -12px 60px rgba(0,0,0,0.45); overflow: hidden; display: flex; flex-direction: column; transform: translateY(100%) scale(0.97); opacity: 0; transition: transform 0.46s cubic-bezier(0.32,1.25,0.54,1), opacity 0.3s ease; flex-shrink: 0; }
+    #spread-overlay.active #spread-panel { transform: translateY(0) scale(1); opacity: 1; }
+    .spread-drag-handle { width: 44px; height: 5px; background: rgba(0,0,0,0.18); border-radius: 3px; margin: 10px auto 0; flex-shrink: 0; }
+    .spread-header { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem 1.5rem; border-bottom: 2px solid #1a1a1a; flex-shrink: 0; background: #f4f1ea; }
+    .spread-edition-tag { font-family: 'Playfair Display', serif; font-size: 0.57rem; font-weight: 900; letter-spacing: 0.22em; text-transform: uppercase; color: #3a3a3a; }
+    .spread-close { width: 34px; height: 34px; border: 2px solid #1a1a1a; background: transparent; cursor: pointer; font-family: 'Playfair Display', serif; font-size: 1.1rem; line-height: 1; color: #1a1a1a; display: flex; align-items: center; justify-content: center; transition: background 0.15s ease, color 0.15s ease; flex-shrink: 0; }
+    .spread-close:hover { background: #1a1a1a; color: #f4f1ea; }
+    #spread-content { flex: 1; overflow-y: auto; padding: 0; }
+    #spread-content::-webkit-scrollbar { width: 5px; }
+    #spread-content::-webkit-scrollbar-track { background: #e8e4d9; }
+    #spread-content::-webkit-scrollbar-thumb { background: #1a1a1a; }
+    .spread-inner { padding: 2rem 2.5rem 3rem; max-width: 1100px; margin: 0 auto; }
+    .spread-top-tag { font-family: 'Merriweather', serif; font-size: 0.58rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; border-bottom: 1.5px solid #1a1a1a; display: inline-block; padding-bottom: 2px; margin-bottom: 0.8rem; }
+    .spread-headline { font-family: 'Playfair Display', serif; font-weight: 900; font-size: clamp(1.8rem,4.5vw,3.2rem); line-height: 1.08; margin-bottom: 0.5rem; }
+    .spread-deck { font-family: 'IM Fell English', serif; font-style: italic; font-size: clamp(0.88rem,1.8vw,1.1rem); line-height: 1.55; color: #3a3a3a; margin-bottom: 0.65rem; }
+    .spread-byline { font-family: 'Merriweather', serif; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #5a5a5a; margin-bottom: 1.2rem; }
+    .spread-rule { border-top: 3px solid #000; border-bottom: 1px solid #000; padding-top: 3px; margin: 0.8rem 0 1.4rem; }
+    .spread-body { font-family: 'Merriweather', serif; font-size: 0.82rem; line-height: 1.92; text-align: justify; }
+    .spread-body p + p { margin-top: 0.9rem; }
+    .spread-pull { font-family: 'Playfair Display', serif; font-size: clamp(0.92rem,2vw,1.22rem); font-style: italic; font-weight: 700; line-height: 1.45; text-align: center; border-top: 2px solid #1a1a1a; border-bottom: 2px solid #1a1a1a; padding: 0.9rem 0.8rem; margin: 1.4rem 0; }
+    .spread-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    .spread-three-col { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; }
+    .spread-sidebar { border-left: 2px solid #1a1a1a; padding-left: 1.5rem; }
+    .spread-stat-row { display: flex; flex-wrap: wrap; gap: 0.75rem; margin: 1.25rem 0; }
+    .spread-kicker-section { font-family: 'Merriweather', serif; font-size: 0.58rem; font-weight: 900; letter-spacing: 0.2em; text-transform: uppercase; border-bottom: 1px solid #1a1a1a; padding-bottom: 3px; margin-bottom: 0.6rem; margin-top: 1.5rem; }
+    .spread-meta-bar { display: flex; flex-wrap: wrap; border: 1px solid #1a1a1a; border-top: none; margin-bottom: 1.5rem; background: rgba(0,0,0,0.018); }
+    .spread-meta-item { display: flex; flex-direction: column; padding: 0.38rem 0.9rem; border-right: 1px solid rgba(0,0,0,0.16); gap: 0.12rem; }
+    .spread-meta-item:last-child { border-right: none; }
+    .spread-meta-key { font-family: 'Merriweather', serif; font-size: 0.49rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: #5a5a5a; }
+    .spread-meta-val { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.78rem; }
+    .spread-tag { display: inline-block; border: 1.5px solid #1a1a1a; font-size: 0.57rem; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; padding: 2px 8px; font-family: 'Merriweather', serif; margin: 2px; }
+    .spread-footer-strip { border-top: 3px solid #1a1a1a; padding: 0.85rem 2.5rem; background: rgba(0,0,0,0.022); display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; flex-wrap: wrap; gap: 0.5rem; }
+    .spread-related-btn { font-family: 'Playfair Display', serif; font-size: 0.58rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; border: 1.5px solid #1a1a1a; padding: 5px 13px; cursor: pointer; background: transparent; color: #1a1a1a; transition: background 0.15s ease, color 0.15s ease; }
+    .spread-related-btn:hover { background: #1a1a1a; color: #f4f1ea; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .spread-two-col, .spread-three-col { grid-template-columns: 1fr; gap: 1.5rem; }
+      .spread-sidebar { border-left: none; border-top: 2px solid #1a1a1a; padding-left: 0; padding-top: 1.2rem; }
+      .spread-inner { padding: 1.5rem 1.2rem 3rem; }
+      .chapter-nav-btn { font-size: 0.52rem; padding: 6px 10px; }
+      .editors-quote-wrap { padding: 1.5rem 1.2rem; }
+      #spread-panel { height: 93vh; }
+      .page-section { padding: 1.5rem 0 5rem; }
+    }
+    @media print {
+      #progress-bar, #chapter-nav, .ticker-outer, #print-btn, #spread-overlay, .page-dots { display: none !important; }
+      .page-section { display: block !important; opacity: 1 !important; transform: none !important; padding: 1rem 0; }
+      body { background-image: none; }
+      body::after { display: none; }
+      .fade-up { opacity: 1 !important; transform: none !important; }
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+
+<!-- Progress Bar -->
+<div id="progress-bar" role="progressbar"></div>
+
+<!-- ===== TICKER ===== -->
+<div class="ticker-outer">
+  <div class="ticker-label">&#9758;&nbsp; Updates</div>
+  <div class="ticker-track-wrapper">
+    <div class="ticker-track" id="ticker-track">
+      <span class="ticker-item">Product Management: where user problems, business thinking and execution come together &mdash; Akash Yadav's next frontier</span>
+      <span class="ticker-item">Summer 2025 at L&amp;T: Narmada&ndash;Kshipra Link Project &middot; &#8377;65,000 Cr &middot; 163 villages &middot; Indore, Madhya Pradesh</span>
+      <span class="ticker-item">BIET's inaugural Pool Campus Drive: 59 selections &middot; 28 from BIET Jhansi &middot; T&amp;P Cell Secretary</span>
+      <span class="ticker-item">Hospitality analytics: 10,000+ booking records &middot; 4 cities &middot; ~15% projected revenue uplift</span>
+      <span class="ticker-item">Top 20 at Epsilon 6.0, SSCBS Delhi &mdash; strategy under constraints among 250+ national teams</span>
+      <span class="ticker-item">Building Akash Yadav's Journal with Google Antigravity &mdash; AI-assisted development, Volume I</span>
+      <span class="ticker-item">Coordinator &rarr; Deputy Secretary &rarr; Secretary &middot; T&amp;P Cell, BIET Jhansi &middot; A leadership journey</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== CHAPTER NAV ===== -->
+<nav id="chapter-nav" aria-label="Chapter navigation">
+  <div class="chapter-nav-inner">
+    <button class="chapter-nav-btn active-nav" data-page="page-cover" onclick="showPage('page-cover')"><span class="chapter-num-badge">01</span><span class="chapter-nav-name">Cover</span></button>
+    <button class="chapter-nav-btn" data-page="page-about" onclick="showPage('page-about')"><span class="chapter-num-badge">02</span><span class="chapter-nav-name">About</span></button>
+    <button class="chapter-nav-btn" data-page="page-work" onclick="showPage('page-work')"><span class="chapter-num-badge">03</span><span class="chapter-nav-name">Work</span></button>
+    <button class="chapter-nav-btn" data-page="page-projects" onclick="showPage('page-projects')"><span class="chapter-num-badge">04</span><span class="chapter-nav-name">Projects</span></button>
+    <button class="chapter-nav-btn" data-page="page-learning" onclick="showPage('page-learning')"><span class="chapter-num-badge">05</span><span class="chapter-nav-name">Learning</span></button>
+    <button class="chapter-nav-btn" data-page="page-skills" onclick="showPage('page-skills')"><span class="chapter-num-badge">06</span><span class="chapter-nav-name">Skills</span></button>
+    <button class="chapter-nav-btn" data-page="page-connect" onclick="showPage('page-connect')"><span class="chapter-num-badge">07</span><span class="chapter-nav-name">Connect</span></button>
+  </div>
+</nav>
+
+<!-- ===== PAGES CONTAINER ===== -->
+<div class="max-w-7xl mx-auto px-3 sm:px-6">
+<div class="pages-container">
+
+  <!-- ==================== PAGE 01: COVER ==================== -->
+  <div id="page-cover" class="page-section">
+
+    <!-- Masthead -->
+    <div class="text-center border-b border-black pb-5 mb-5">
+      <div class="py-1.5 mb-2 flex flex-col sm:flex-row justify-center items-center gap-1 sm:gap-4">
+        <span class="masthead-subtitle">Volume I &middot; July 2026</span>
+        <span class="masthead-subtitle hidden sm:inline opacity-30">&bull;</span>
+        <span class="masthead-subtitle">Jhansi, Uttar Pradesh &middot; India</span>
+      </div>
+      <div class="double-rule mb-5"></div>
+      <p class="journal-name-sup mb-1">Akash Yadav's</p>
+      <h1 class="journal-title">Journal</h1>
+      <div class="ornament-divider mt-2">&mdash; &#10022; &mdash;</div>
+      <p class="journal-tagline mt-2">A Personal Journal of Work, Ideas &amp; Growth</p>
+      <p class="masthead-subtitle mt-2" style="letter-spacing:0.1em; text-transform:none; font-family:'Merriweather',serif; font-size:0.72rem; font-weight:400; opacity:0.7;">Problems &middot; Decisions &middot; People &middot; Impact</p>
+      <div class="double-rule mt-5 mb-3"></div>
+      <div class="flex flex-col sm:flex-row justify-center items-center gap-1 sm:gap-4 py-1">
+        <span class="masthead-subtitle">aakash.yadavv23@gmail.com</span>
+        <span class="masthead-subtitle hidden sm:inline opacity-30">&bull;</span>
+        <span class="masthead-subtitle">+91 7380650624</span>
+        <span class="masthead-subtitle hidden sm:inline opacity-30">&bull;</span>
+        <span class="masthead-subtitle">linkedin.com/in/akash-yadavv</span>
+      </div>
+    </div>
+
+    <!-- Ornament image -->
+    <div class="border border-black mb-6">
+      <img src="assets/masthead_ornament.png" alt="Akash Yadav's Journal — decorative masthead ornament" class="masthead-img" />
+    </div>
+
+    <!-- Table of Contents -->
+    <div class="section-label mb-0">Table of Contents</div>
+    <div class="border border-t-0 border-black p-5">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+
+        <div class="toc-card" onclick="showPage('page-about')">
+          <p class="toc-card-num">01 &middot; Editor's Letter</p>
+          <p class="toc-card-title">A Note Before You Read</p>
+          <p class="toc-card-desc">What connects seemingly different experiences — and where I'm headed next.</p>
+          <p class="toc-card-action">Read &rarr; About</p>
+        </div>
+
+        <div class="toc-card" onclick="showPage('page-about')">
+          <p class="toc-card-num">02 &middot; Journal Entry 01</p>
+          <p class="toc-card-title">From Engineering Problems to Business Decisions</p>
+          <p class="toc-card-desc">A journey across engineering, strategy, analytics and leadership.</p>
+          <p class="toc-card-action">Read &rarr; About</p>
+        </div>
+
+        <div class="toc-card" onclick="openSpread('lt')">
+          <p class="toc-card-num">03 &middot; Field Notes</p>
+          <p class="toc-card-title">Inside a Large-Scale Water Infrastructure Project</p>
+          <p class="toc-card-desc">Summer at L&T · Narmada–Kshipra Link Project · ₹65,000 Cr · Indore, M.P.</p>
+          <p class="toc-card-action">Open Entry &nearr;</p>
+        </div>
+
+        <div class="toc-card" onclick="openSpread('tp')">
+          <p class="toc-card-num">04 &middot; Leadership Notes</p>
+          <p class="toc-card-title">From Coordinator to Secretary</p>
+          <p class="toc-card-desc">T&P Cell, BIET Jhansi · 60+ member team · Inaugural Pool Campus Drive.</p>
+          <p class="toc-card-action">Open Entry &nearr;</p>
+        </div>
+
+        <div class="toc-card" onclick="openSpread('hosp')">
+          <p class="toc-card-num">05 &middot; Case Study 01</p>
+          <p class="toc-card-title">Where Does the Revenue Go?</p>
+          <p class="toc-card-desc">Hospitality sector analytics · 10,000+ records · 4 cities · ~15% uplift.</p>
+          <p class="toc-card-action">Open Case Study &nearr;</p>
+        </div>
+
+        <div class="toc-card" onclick="openSpread('eps')">
+          <p class="toc-card-num">06 &middot; Case Study 02</p>
+          <p class="toc-card-title">Strategy Under Constraints</p>
+          <p class="toc-card-desc">Epsilon 6.0 · SSCBS, Delhi · Top 20 among 250+ national teams.</p>
+          <p class="toc-card-action">Open Case Study &nearr;</p>
+        </div>
+
+        <div class="toc-card" onclick="showPage('page-learning')">
+          <p class="toc-card-num">07 &middot; Learning Log</p>
+          <p class="toc-card-title">From Understanding Products to Trying to Build Them</p>
+          <p class="toc-card-desc">Learning Product Management · Connecting with practitioners · Exploring AI tools.</p>
+          <p class="toc-card-action">Read &rarr; Learning</p>
+        </div>
+
+        <div class="toc-card" onclick="showPage('page-learning')">
+          <p class="toc-card-num">08 &middot; Build Log 001</p>
+          <p class="toc-card-title">Akash Yadav's Journal</p>
+          <p class="toc-card-desc">My first serious attempt at turning an idea into a digital experience.</p>
+          <p class="toc-card-action">Read &rarr; Learning</p>
+        </div>
+
+        <div class="toc-card" onclick="showPage('page-skills')">
+          <p class="toc-card-num">09 &middot; How I Work</p>
+          <p class="toc-card-title">The Toolkit</p>
+          <p class="toc-card-desc">Skills, methods and tools across product, strategy, analytics and execution.</p>
+          <p class="toc-card-action">Read &rarr; Skills</p>
+        </div>
+
+        <div class="toc-card" onclick="showPage('page-skills')">
+          <p class="toc-card-num">10 &middot; Academic Record</p>
+          <p class="toc-card-title">Education &amp; Credentials</p>
+          <p class="toc-card-desc">B.Tech Civil Engineering, BIET Jhansi · Certifications · 2023–2027.</p>
+          <p class="toc-card-action">Read &rarr; Skills</p>
+        </div>
+
+        <div class="toc-card" onclick="showPage('page-connect')">
+          <p class="toc-card-num">11 &middot; Off the Clock</p>
+          <p class="toc-card-title">When the Laptop Closes, the Scorecard Opens</p>
+          <p class="toc-card-desc">Cricket, strategy, and the things that don't need a professional reason to be there.</p>
+          <p class="toc-card-action">Read &rarr; Connect</p>
+        </div>
+
+        <div class="toc-card" onclick="showPage('page-connect')">
+          <p class="toc-card-num">12 &ndash; 13 &middot; Editor's Desk &amp; Let's Connect</p>
+          <p class="toc-card-title">A Personal Note &amp; Contact</p>
+          <p class="toc-card-desc">The closing note — and an invitation to connect if you're working on something interesting.</p>
+          <p class="toc-card-action">Read &rarr; Connect</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Footer strip -->
+    <div class="border border-t-0 border-black py-2 px-5 text-center">
+      <p class="masthead-subtitle opacity-50" style="font-size:0.55rem;">Akash Yadav's Journal &middot; Volume I &middot; 2026 &middot; Work in Progress. Always.</p>
+    </div>
+
+  </div><!-- /page-cover -->
+
+  <!-- ==================== PAGE 02: ABOUT ==================== -->
+  <div id="page-about" class="page-section">
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-0 border border-black">
+
+      <!-- Editor's Letter (left) -->
+      <div class="lg:col-span-3 p-6 border-b lg:border-b-0 lg:border-r border-black fade-up">
+        <span class="chapter-label">01 &middot; Editor's Letter</span>
+        <h2 class="article-headline text-[clamp(1.4rem,3.5vw,2.4rem)] mb-4 leading-tight">A Note Before You Read</h2>
+        <p class="article-body drop-cap">
+          I've always been curious about what happens before a decision is made — how a problem is understood, what information matters, whose perspective gets considered, and why one solution is chosen over another.
+        </p>
+        <p class="article-body mt-3">
+          That curiosity has taken me through seemingly different worlds: studying Civil Engineering, working around large-scale infrastructure at L&amp;T, leading placement operations at BIET Jhansi, competing in national strategy challenges, and using data to solve business problems.
+        </p>
+        <p class="article-body mt-3">
+          At first glance, these experiences may not appear to follow a straight line. I don't think they need to. What connects them is the way I like to work: understand the problem, ask the right questions, work with people, use evidence where it matters, and turn an idea into something actionable.
+        </p>
+        <p class="article-body mt-3">
+          My exploration of business and strategy initially drew me towards Management Consulting, where I developed an interest in structured problem-solving, research and decision-making. Over time, that curiosity has increasingly led me towards <strong>Product Management</strong> — a space where understanding users, solving business problems, working across functions, using data to inform decisions, and taking ideas closer to execution come together.
+        </p>
+        <p class="article-body mt-3">
+          Today, Product Management is the direction I'm actively working towards, while the consulting and analytical thinking I've developed along the way continue to shape how I approach problems. I'm building the skills, experiences and product perspective needed to turn that interest into a career.
+        </p>
+        <p class="article-body mt-3">
+          Analytics complements that process. For me, data is not the destination; it is one of the ways I understand a problem better, challenge assumptions, and make stronger decisions.
+        </p>
+        <p class="article-body mt-3 italic">
+          Akash Yadav's Journal is my attempt to document that journey — not just through what I have done, but through the problems I have worked on, the decisions I have made, what those experiences taught me, and what I want to explore next. There is still a lot to learn, build and figure out. Consider this Volume I.
+        </p>
+        <p class="article-byline mt-4">&mdash; Akash Yadav &nbsp;&middot;&nbsp; Editor, Author &amp; Work in Progress</p>
+      </div>
+
+      <!-- Journal Entry 01 + Dossier (right) -->
+      <div class="lg:col-span-2 p-6 fade-up">
+        <span class="chapter-label">02 &middot; Journal Entry 01</span>
+        <h2 class="article-headline text-[clamp(1.1rem,2.5vw,1.6rem)] mb-3 leading-tight">From Engineering Problems to Business Decisions</h2>
+        <p class="article-body" style="font-size:0.78rem;">
+          I'm Akash Yadav, a B.Tech Civil Engineering student at BIET Jhansi. My academic training began with engineering — structures, systems and the logic behind how things are built — but over time, I found myself becoming increasingly interested in a different layer of problems: the decisions behind them.
+        </p>
+        <p class="article-body mt-2" style="font-size:0.78rem;">
+          Why is one solution chosen over another? What does the user or stakeholder actually need? How do you make a decision when resources are limited? And where can data help you see something that intuition alone might miss? Those questions gradually took my experiences beyond the boundaries of my degree.
+        </p>
+
+        <div class="ornament-divider my-4">&mdash; &#10022; &mdash;</div>
+
+        <!-- Intelligence Dossier -->
+        <p class="article-kicker mb-2">Intelligence Dossier</p>
+        <div class="weather-box mb-4">
+          <div class="weather-row"><span class="weather-key">Name</span><span class="weather-val">Akash Yadav</span></div>
+          <div class="weather-row"><span class="weather-key">Institution</span><span class="weather-val">BIET Jhansi</span></div>
+          <div class="weather-row"><span class="weather-key">Degree</span><span class="weather-val">B.Tech &middot; Civil Engineering</span></div>
+          <div class="weather-row"><span class="weather-key">Batch</span><span class="weather-val">2023 &ndash; 2027</span></div>
+          <div class="weather-row"><span class="weather-key">Interests</span><span class="weather-val">Product &middot; Consulting &middot; Analytics</span></div>
+          <div class="weather-row"><span class="weather-key">Mission</span><span class="weather-val">Learning to solve better problems.</span></div>
+        </div>
+
+        <!-- Current Conditions -->
+        <p class="article-kicker mb-2">Current Conditions Report</p>
+        <div class="weather-box">
+          <div class="weather-row"><span class="weather-key">Status</span><span class="weather-val">Exploring opportunities</span></div>
+          <div class="weather-row"><span class="weather-key">Direction</span><span class="weather-val">Product Management</span></div>
+          <div class="weather-row"><span class="weather-key">Toolkit</span><span class="weather-val">Research &middot; Data &middot; Strategy</span></div>
+          <div class="weather-row"><span class="weather-key">Location</span><span class="weather-val">India &middot; Open to opportunities</span></div>
+          <div class="weather-row"><span class="weather-key">Forecast</span><span class="weather-val">Curious, learning &amp; building.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /page-about -->
+
+  <!-- ==================== PAGE 03: WORK ==================== -->
+  <div id="page-work" class="page-section">
+    <div class="section-label mb-0">Work &middot; Field &amp; Leadership Notes</div>
+    <div class="border border-t-0 border-black">
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-0">
+
+        <!-- L&T Card -->
+        <div class="lg:col-span-3 p-5 border-b lg:border-b-0 lg:border-r border-black story-card fade-up" onclick="openSpread('lt')">
+          <span class="chapter-label">03 &middot; Field Notes</span>
+          <p class="article-kicker mb-1">Summer Internship &middot; Larsen &amp; Toubro</p>
+          <h3 class="article-headline text-[clamp(1.2rem,3vw,2rem)] mb-1 leading-tight">Inside a Large-Scale Water Infrastructure Project</h3>
+          <p class="article-deck text-sm mb-0">My summer at L&amp;T offered a closer look at how engineering systems, operational decisions and technology come together in the execution of infrastructure at scale.</p>
+          <div class="metadata-bar">
+            <div class="meta-item"><span class="meta-key">Timeline</span><span class="meta-val">June &ndash; July 2025</span></div>
+            <div class="meta-item"><span class="meta-key">Location</span><span class="meta-val">Indore, Madhya Pradesh</span></div>
+            <div class="meta-item"><span class="meta-key">Project</span><span class="meta-val">Narmada&ndash;Kshipra Link</span></div>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <div class="stat-badge"><span class="stat-num">&#8377;65K</span><span class="stat-label">Crore Project</span></div>
+            <div class="stat-badge"><span class="stat-num">163</span><span class="stat-label">Villages Benefitted</span></div>
+            <div class="stat-badge"><span class="stat-num">~30K</span><span class="stat-label">Hectares Coverage</span></div>
+            <div class="stat-badge"><span class="stat-num">6</span><span class="stat-label">Break Pressure Tanks</span></div>
+          </div>
+          <p class="article-body drop-cap">
+            During my summer internship at Larsen &amp; Toubro, I gained exposure to the Narmada&ndash;Kshipra Link Project — a &#8377;65,000 crore large-scale water infrastructure project designed to support water distribution across 163 villages and approximately 30,000 hectares. My work involved studying the project's execution framework and understanding how its pipeline and distribution network was planned and operated...
+          </p>
+          <div class="mt-3" style="pointer-events:none;"><span class="read-btn">Read Field Notes <span>&rarr;</span></span></div>
+        </div>
+
+        <!-- T&P Card -->
+        <div class="lg:col-span-2 p-5 story-card fade-up" onclick="openSpread('tp')">
+          <span class="chapter-label">04 &middot; Leadership Notes</span>
+          <p class="article-kicker mb-1">Training &amp; Placement Cell &middot; BIET Jhansi</p>
+          <h3 class="article-headline text-[clamp(1.1rem,2.5vw,1.6rem)] mb-1 leading-tight">From Coordinator to Secretary: Learning Leadership Through Execution</h3>
+          <p class="article-deck text-sm mb-0">A journey from Coordinator to Deputy Secretary to Secretary — and what changes when responsibility grows.</p>
+          <div class="metadata-bar">
+            <div class="meta-item"><span class="meta-key">Duration</span><span class="meta-val">Sept. 2024 &ndash; Present</span></div>
+            <div class="meta-item"><span class="meta-key">Role</span><span class="meta-val">Secretary, T&amp;P Cell</span></div>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <div class="stat-badge"><span class="stat-num">60+</span><span class="stat-label">Team Members</span></div>
+            <div class="stat-badge"><span class="stat-num">1,200+</span><span class="stat-label">Students Served</span></div>
+            <div class="stat-badge"><span class="stat-num">59</span><span class="stat-label">Selections — Pool Drive</span></div>
+          </div>
+          <p class="article-body drop-cap">
+            My journey with BIET Jhansi's Training &amp; Placement Cell began as a Coordinator and gradually evolved into larger responsibilities — first as Deputy Secretary and subsequently Secretary. The progression changed my understanding of leadership. As responsibilities increased, the work became less about completing an assigned task and more about ensuring that people, communication and processes moved together...
+          </p>
+          <div class="mt-3" style="pointer-events:none;"><span class="read-btn">Read Leadership Notes <span>&rarr;</span></span></div>
+        </div>
+
+      </div>
+    </div>
+    <div class="read-also-strip mt-4">
+      <span class="read-also-label">Also in this journal</span>
+      <span class="read-also-item" onclick="showPage('page-projects')">Projects &amp; Case Studies &rarr;</span>
+      <span class="read-also-item" onclick="showPage('page-learning')">Learning Log &amp; Build Log &rarr;</span>
+    </div>
+  </div><!-- /page-work -->
+
+  <!-- ==================== PAGE 04: PROJECTS ==================== -->
+  <div id="page-projects" class="page-section">
+    <div class="section-label mb-0">Projects &middot; Case Studies</div>
+    <div class="border border-t-0 border-black">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-0">
+
+        <!-- Hospitality Card -->
+        <div class="p-5 border-b md:border-b-0 md:border-r border-black story-card fade-up" onclick="openSpread('hosp')">
+          <span class="chapter-label">05 &middot; Case Study 01</span>
+          <p class="article-kicker mb-1">Business Analysis &middot; Hospitality Sector</p>
+          <h3 class="article-headline text-[clamp(1.1rem,2.8vw,1.85rem)] mb-1 leading-tight">Where Does the Revenue Go? Optimizing Revenue Leakage &amp; Profitability</h3>
+          <p class="article-deck text-sm mb-0">Where is potential revenue being lost, and what could be changed to capture more of it?</p>
+          <div class="metadata-bar">
+            <div class="meta-item"><span class="meta-key">Duration</span><span class="meta-val">3 Months</span></div>
+            <div class="meta-item"><span class="meta-key">Approach</span><span class="meta-val">Business Analysis &middot; Secondary Research</span></div>
+            <div class="meta-item"><span class="meta-key">Tools</span><span class="meta-val">Tableau &middot; Excel</span></div>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <div class="stat-badge"><span class="stat-num">10K+</span><span class="stat-label">Booking Records</span></div>
+            <div class="stat-badge"><span class="stat-num">4</span><span class="stat-label">Cities Studied</span></div>
+            <div class="stat-badge"><span class="stat-num">~15%</span><span class="stat-label">Projected Revenue Upside</span></div>
+          </div>
+          <p class="article-body drop-cap">
+            Working with 10,000+ booking records across hotel properties in Delhi, Mumbai, Hyderabad and Bangalore, I analysed booking behaviour, occupancy, room categories, pricing and revenue performance to identify patterns behind underperformance. But identifying the patterns was only one part of the project...
+          </p>
+          <div class="mt-3" style="pointer-events:none;"><span class="read-btn">Read Case Study <span>&rarr;</span></span></div>
+        </div>
+
+        <!-- Epsilon Card -->
+        <div class="p-5 story-card fade-up" onclick="openSpread('eps')">
+          <span class="chapter-label">06 &middot; Case Study 02</span>
+          <p class="article-kicker mb-1">Strategy &middot; Business Analytics &middot; National Competition</p>
+          <h3 class="article-headline text-[clamp(1.1rem,2.8vw,1.85rem)] mb-1 leading-tight">Strategy Under Constraints: Epsilon 6.0, SSCBS, University of Delhi</h3>
+          <p class="article-deck text-sm mb-0">Determine how a platform should allocate resources across content opportunities under strict financial and platform constraints.</p>
+          <div class="metadata-bar">
+            <div class="meta-item"><span class="meta-key">Event</span><span class="meta-val">Epsilon 6.0 &middot; SSCBS, Delhi</span></div>
+            <div class="meta-item"><span class="meta-key">Focus</span><span class="meta-val">Strategy &middot; Business Analytics</span></div>
+            <div class="meta-item"><span class="meta-key">Result</span><span class="meta-val">Top 20 of 250+ Teams</span></div>
+          </div>
+          <div class="flex flex-wrap gap-2 mb-4">
+            <div class="stat-badge"><span class="stat-num">Top 20</span><span class="stat-label">National Finish</span></div>
+            <div class="stat-badge"><span class="stat-num">250+</span><span class="stat-label">Competing Teams</span></div>
+            <div class="stat-badge"><span class="stat-num">&#8377;700Cr</span><span class="stat-label">Scenario I</span></div>
+            <div class="stat-badge"><span class="stat-num">&#8377;1,000Cr</span><span class="stat-label">Scenario II</span></div>
+          </div>
+          <p class="article-body drop-cap">
+            At Epsilon 6.0, our team was presented with an OTT content-acquisition problem: determine how a platform should allocate its resources across content opportunities while operating under strict financial and platform constraints. The challenge was not simply to identify the most attractive content. We had to determine which combination of investments created the strongest strategic outcome within the available budget...
+          </p>
+          <div class="mt-3" style="pointer-events:none;"><span class="read-btn">Read Case Study <span>&rarr;</span></span></div>
+        </div>
+
+      </div>
+    </div>
+    <div class="read-also-strip mt-4">
+      <span class="read-also-label">Also in this journal</span>
+      <span class="read-also-item" onclick="showPage('page-work')">Work &amp; Field Notes &rarr;</span>
+      <span class="read-also-item" onclick="showPage('page-learning')">Learning Log &rarr;</span>
+    </div>
+  </div><!-- /page-projects -->
+
+  <!-- ==================== PAGE 05: LEARNING ==================== -->
+  <div id="page-learning" class="page-section">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 border border-black">
+
+      <!-- Learning Log -->
+      <div class="p-6 border-b lg:border-b-0 lg:border-r border-black fade-up">
+        <span class="chapter-label">07 &middot; Learning Log</span>
+        <h2 class="article-headline text-[clamp(1.2rem,3vw,2rem)] mb-3 leading-tight">From Understanding Products to Trying to Build Them</h2>
+        <p class="article-deck text-sm mb-4">Learning Product Management, learning from people who have built products — and experimenting with tools that are changing how products get built.</p>
+        <p class="article-body drop-cap">
+          My interest in Product Management has grown steadily as I've explored what happens at the intersection of users, business, technology and execution.
+        </p>
+        <p class="article-body mt-3">
+          Right now, I'm deliberately investing time in understanding the discipline better — how product teams identify meaningful problems, understand users, prioritise what matters, make decisions under constraints, and work across functions to turn ideas into products.
+        </p>
+        <p class="article-body mt-3">
+          A significant part of that learning has come from connecting with people already working in the product ecosystem. I've been reaching out to experienced professionals, learning from their journeys and seeking guidance on what actually matters when building a career in Product.
+        </p>
+        <p class="article-body mt-3">
+          At the same time, this exploration has introduced me to another rapidly evolving part of the product-building landscape: AI-assisted building. I've been exploring tools such as Google Antigravity and OpenAI Codex, understanding how AI can support development workflows and experimenting with how someone with an idea can use these tools to move closer to a working implementation.
+        </p>
+        <p class="article-body mt-3">
+          Rather than learning these tools in isolation, I've been trying to use them while building. And Akash Yadav's Journal is one of those experiments.
+        </p>
+      </div>
+
+      <!-- Build Log -->
+      <div class="p-6 fade-up">
+        <span class="chapter-label">08 &middot; Build Log 001</span>
+        <h2 class="article-headline text-[clamp(1.2rem,3vw,2rem)] mb-3 leading-tight">Akash Yadav's Journal</h2>
+        <p class="article-deck text-sm mb-4">My first serious attempt at turning an idea into a digital experience.</p>
+
+        <div class="pull-quote mb-4">"How do I present who I am and what I've done without creating another generic portfolio website?"</div>
+
+        <p class="article-body" style="font-size:0.78rem;">
+          A conventional portfolio could fulfil the basic requirements. But that wasn't the experience I wanted to create. I wanted something that could communicate my work while still feeling personal — structured enough for a recruiter to navigate, but distinctive enough to reflect the person behind it.
+        </p>
+        <p class="article-body mt-3" style="font-size:0.78rem;">
+          That led to Akash Yadav's Journal — a portfolio built around the idea of a personal journal, where experiences become stories, projects become case studies, and the publication continues to evolve alongside my own journey. The process itself has become part of my Product Management learning: thinking about the audience, questioning assumptions, structuring information, making trade-offs, building, reviewing what doesn't work, and iterating.
+        </p>
+
+        <p class="article-kicker mt-4 mb-2">The Building Process</p>
+        <ul class="step-list">
+          <li><span class="step-num">01 &middot;</span> <span><strong>Identify.</strong> Generic portfolios weren't representing the story I wanted to tell.</span></li>
+          <li><span class="step-num">02 &middot;</span> <span><strong>Define.</strong> Communicate credibility and work without losing personality.</span></li>
+          <li><span class="step-num">03 &middot;</span> <span><strong>Explore.</strong> Experiment with information architecture, storytelling and visual identity.</span></li>
+          <li><span class="step-num">04 &middot;</span> <span><strong>Build.</strong> Develop an interactive personal journal rather than a conventional résumé website.</span></li>
+          <li><span class="step-num">05 &middot;</span> <span><strong>Iterate.</strong> Revisit content, correct assumptions, improve positioning and refine continuously.</span></li>
+        </ul>
+
+        <p class="article-kicker mt-4 mb-2">AI-Assisted Building Desk</p>
+        <table class="ai-desk-table">
+          <tr><td>Google Antigravity</td><td>Exploring AI-assisted development and agentic coding workflows.</td></tr>
+          <tr><td>OpenAI Codex</td><td>Using AI to help develop, modify and iterate on software.</td></tr>
+          <tr><td>AI-Assisted Prototyping</td><td>Experimenting with moving from idea to functional implementation faster.</td></tr>
+        </table>
+
+        <div class="pull-quote mt-4">
+          "Building with AI has made it easier to move from idea to implementation — but it has also made one thing clearer: being able to build something doesn't mean you know <em>what</em> should be built."
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /page-learning -->
+
+  <!-- ==================== PAGE 06: SKILLS ==================== -->
+  <div id="page-skills" class="page-section">
+    <div class="section-label mb-0">Skills &middot; Education &amp; Credentials</div>
+    <div class="border border-t-0 border-black">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-0">
+
+        <!-- How I Work -->
+        <div class="lg:col-span-2 p-5 border-b lg:border-b-0 lg:border-r border-black fade-up">
+          <span class="chapter-label">09 &middot; How I Work</span>
+          <h3 class="article-headline text-[clamp(1.1rem,2.5vw,1.7rem)] mb-4 leading-tight">The Toolkit — Skills, Methods &amp; Tools</h3>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6">
+            <div>
+              <p class="skill-cat-head">Product &amp; Problem Solving</p>
+              <div class="flex flex-wrap gap-1.5 mb-1">
+                <span class="skill-tag">Problem Framing</span>
+                <span class="skill-tag">User Thinking</span>
+                <span class="skill-tag">Prioritisation</span>
+                <span class="skill-tag">Product Thinking</span>
+              </div>
+
+              <p class="skill-cat-head">Research &amp; Strategy</p>
+              <div class="flex flex-wrap gap-1.5 mb-1">
+                <span class="skill-tag">Primary Research</span>
+                <span class="skill-tag">Secondary Research</span>
+                <span class="skill-tag">Market Intelligence</span>
+                <span class="skill-tag">Competitive Research</span>
+                <span class="skill-tag">Problem Structuring</span>
+                <span class="skill-tag">Strategy Formulation</span>
+              </div>
+            </div>
+
+            <div>
+              <p class="skill-cat-head">Analytics &amp; Decision Support</p>
+              <div class="flex flex-wrap gap-1.5 mb-1">
+                <span class="skill-tag">Exploratory Data Analysis</span>
+                <span class="skill-tag">Statistical Analysis</span>
+                <span class="skill-tag">Business Analytics</span>
+                <span class="skill-tag">Data Visualisation</span>
+                <span class="skill-tag">Dashboarding</span>
+              </div>
+
+              <p class="skill-cat-head">Leadership &amp; Execution</p>
+              <div class="flex flex-wrap gap-1.5 mb-1">
+                <span class="skill-tag">Team Coordination</span>
+                <span class="skill-tag">Stakeholder Management</span>
+                <span class="skill-tag">Project Execution</span>
+                <span class="skill-tag">Institutional Communication</span>
+                <span class="skill-tag">Documentation</span>
+              </div>
+            </div>
+          </div>
+
+          <p class="skill-cat-head mt-5">Tools of the Trade</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
+            <div class="classifieds-box">
+              <p class="classifieds-header text-xs">Data &amp; Analytics</p>
+              <div class="flex flex-wrap gap-1.5 mt-1">
+                <span class="skill-tag">Excel</span><span class="skill-tag">Tableau</span><span class="skill-tag">SQL</span><span class="skill-tag">Python</span><span class="skill-tag">Google Sheets</span>
+              </div>
+            </div>
+            <div class="classifieds-box">
+              <p class="classifieds-header text-xs">Communication &amp; Build</p>
+              <div class="flex flex-wrap gap-1.5 mt-1">
+                <span class="skill-tag">PowerPoint</span><span class="skill-tag">MS Word</span><span class="skill-tag">Canva</span><span class="skill-tag">AutoCAD</span><span class="skill-tag">Google Antigravity</span><span class="skill-tag">OpenAI Codex</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Academic Record + Certs -->
+        <div class="p-5 fade-up">
+          <span class="chapter-label">10 &middot; Academic Record</span>
+          <h3 class="article-headline text-[clamp(1rem,2.2vw,1.4rem)] mb-4 leading-tight">Education &amp; Credentials</h3>
+
+          <div class="space-y-3 mb-5">
+            <div class="classifieds-box">
+              <p class="classifieds-header text-sm">B.Tech &middot; Civil Engineering</p>
+              <p class="article-body text-xs mt-1"><strong>BIET Jhansi</strong> &middot; 2023&ndash;2027</p>
+              <p class="article-body text-xs mt-1" style="font-style:italic;">My formal academic foundation is in Civil Engineering. My time at BIET has extended considerably beyond the classroom — through leadership in the T&amp;P Cell, strategy competitions, independent projects, and an increasing exploration of Product Management.</p>
+            </div>
+
+            <div class="border border-black p-3">
+              <p class="article-body text-xs font-bold">Senior Secondary &middot; CBSE</p>
+              <p class="article-body text-xs">Angel's Abode Public School, Tikamgarh &middot; Class XII &middot; Science</p>
+            </div>
+
+            <div class="border border-black p-3">
+              <p class="article-body text-xs font-bold">Secondary &middot; ICSE</p>
+              <p class="article-body text-xs">St. Lawrence School, Mehroni &middot; Class X</p>
+            </div>
+          </div>
+
+          <p class="article-kicker mb-3">Official Gazette &middot; Certifications</p>
+          <div class="space-y-2">
+            <div class="border-l-4 border-black pl-3 py-1">
+              <p class="article-body text-xs font-bold">Winter Consulting &middot; 2025</p>
+              <p class="article-body text-xs opacity-70">Consulting &amp; Analytics Club · IIT Guwahati</p>
+              <p class="article-body text-xs mt-0.5">Consulting problem-solving, business analysis and structured approaches to case-based problems.</p>
+            </div>
+            <div class="border-l-4 border-black pl-3 py-1">
+              <p class="article-body text-xs font-bold">Ignite India &middot; 2026</p>
+              <p class="article-body text-xs opacity-70">Wadhwani Foundation</p>
+              <p class="article-body text-xs mt-0.5">Entrepreneurship, employability and professional development.</p>
+            </div>
+            <div class="border-l-4 border-black pl-3 py-1">
+              <p class="article-body text-xs font-bold">Google Digital Marketing &amp; E-Commerce &middot; 2024</p>
+              <p class="article-body text-xs opacity-70">Google Professional Certificate</p>
+              <p class="article-body text-xs mt-0.5">Digital marketing, SEO/SEM, e-commerce, campaign measurement and digital customer acquisition.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div><!-- /page-skills -->
+
+  <!-- ==================== PAGE 07: CONNECT ==================== -->
+  <div id="page-connect" class="page-section">
+
+    <!-- Editor's Quote - full width -->
+    <div class="fade-up mb-6">
+      <span class="chapter-label text-center block mb-3">12 &middot; From the Editor's Desk</span>
+      <div class="editors-quote-wrap">
+        <p class="editors-quote-text">
+          "My story won't end at 'he had potential,' or 'he had a bright future,' or 'he was destined for greatness.'<br/>
+          I'll go ahead and actually become all of that. I'll live out my potential and reach the highest level I possibly can."
+        </p>
+        <p class="editors-quote-attr">&mdash; Akash Yadav &nbsp;&middot;&nbsp; By me, for me.</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-0 border border-black">
+
+      <!-- Off the Clock -->
+      <div class="p-6 border-b md:border-b-0 md:border-r border-black fade-up">
+        <span class="chapter-label">11 &middot; Off the Clock</span>
+        <h3 class="article-headline text-[clamp(1.1rem,2.8vw,1.9rem)] mb-2 leading-tight">When the Laptop Closes, the Scorecard Opens</h3>
+        <p class="article-deck text-sm mb-4">There is work, there are projects — and then there is cricket.</p>
+        <p class="article-body drop-cap">
+          Cricket has been one of those constants in my life that never really needed a professional reason to be there. I follow the game across formats, enjoy the strategy behind it, and can probably spend far longer discussing a playing XI, a bowling change or a questionable chase than the situation reasonably demands.
+        </p>
+        <p class="article-body mt-3">
+          What fascinates me most is how much can change within a game — conditions, momentum, match-ups and pressure constantly reshape what the right decision looks like. Maybe that is why I enjoy the strategic side of cricket as much as the game itself.
+        </p>
+        <p class="article-body mt-3 italic">
+          But sometimes, there doesn't need to be a lesson in it. Sometimes I just really like cricket.
+        </p>
+
+        <div class="ornament-divider my-4">&mdash; &#10022; &mdash;</div>
+
+        <p class="article-kicker mb-2">Cricket File</p>
+        <div class="weather-box">
+          <div class="weather-row"><span class="weather-key">Following</span><span class="weather-val">Tests &middot; ODIs &middot; T20s</span></div>
+          <div class="weather-row"><span class="weather-key">Favourite Part</span><span class="weather-val">Strategy, momentum &amp; those completely unpredictable final overs.</span></div>
+          <div class="weather-row"><span class="weather-key">Match-Day Habit</span><span class="weather-val">Having an opinion on the playing XI before the first ball is bowled.</span></div>
+          <div class="weather-row"><span class="weather-key">Known Weakness</span><span class="weather-val">"Just one more over."</span></div>
+        </div>
+      </div>
+
+      <!-- Let's Connect -->
+      <div class="p-6 fade-up">
+        <span class="chapter-label">13 &middot; Let's Connect</span>
+        <h3 class="article-headline text-[clamp(1.2rem,3vw,2.2rem)] mb-2 leading-tight">Got a Problem Worth Solving?<br/>Let's talk.</h3>
+        <p class="article-body mt-2" style="font-size:0.8rem;">
+          I'm always interested in meeting people who are building products, solving interesting problems, working with technology, or simply thinking about how something could be done better.
+        </p>
+        <p class="article-body mt-2" style="font-size:0.8rem;">
+          I'm currently working towards building my career in Product Management, while continuing to develop the strategic, analytical and execution skills that have shaped my journey so far.
+        </p>
+        <p class="article-body mt-2 mb-5" style="font-size:0.8rem;">
+          If you're working on something interesting, have an opportunity where I could contribute, or simply want to exchange ideas — I'd be glad to hear from you.
+        </p>
+
+        <p class="article-kicker mb-3">Contact</p>
+        <div class="weather-box mb-5">
+          <div class="contact-link-row">
+            <span class="contact-key">Email</span>
+            <span class="contact-val"><a href="mailto:aakash.yadavv23@gmail.com">aakash.yadavv23@gmail.com</a></span>
+          </div>
+          <div class="contact-link-row">
+            <span class="contact-key">Phone</span>
+            <span class="contact-val"><a href="tel:+917380650624">+91 7380650624</a></span>
+          </div>
+          <div class="contact-link-row">
+            <span class="contact-key">LinkedIn</span>
+            <span class="contact-val"><a href="https://linkedin.com/in/akash-yadavv" target="_blank" rel="noopener">linkedin.com/in/akash-yadavv</a></span>
+          </div>
+          <div class="contact-link-row">
+            <span class="contact-key">Résumé</span>
+            <span class="contact-val"><a href="https://drive.google.com/file/d/1Vn7SOw0mUhwbA_TwFGu50wKbhYPPvmSu/view?usp=sharing" target="_blank" rel="noopener">View / Download Résumé &rarr;</a></span>
+          </div>
+        </div>
+
+        <div class="ad-box">
+          <p class="masthead-subtitle font-bold mb-1" style="font-size:0.7rem;">Akash Yadav's Journal &middot; Volume I &middot; 2026</p>
+          <p class="article-body text-xs mt-1 italic">Published, designed &amp; continually revised by Akash Yadav.<br/>A journal of things I've worked on, things I'm learning, and things I'm yet to build.</p>
+          <p class="masthead-subtitle mt-2" style="font-size:0.52rem; opacity:0.5;">Work in Progress. Always.</p>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /page-connect -->
+
+</div><!-- /pages-container -->
+</div><!-- /max-w-7xl -->
+
+<!-- ===== PAGE DOTS ===== -->
+<div class="page-dots" role="navigation" aria-label="Page indicator">
+  <div class="page-dot active-dot" onclick="showPage('page-cover')" title="Cover" aria-label="Cover"></div>
+  <div class="page-dot" onclick="showPage('page-about')" title="About" aria-label="About"></div>
+  <div class="page-dot" onclick="showPage('page-work')" title="Work" aria-label="Work"></div>
+  <div class="page-dot" onclick="showPage('page-projects')" title="Projects" aria-label="Projects"></div>
+  <div class="page-dot" onclick="showPage('page-learning')" title="Learning" aria-label="Learning"></div>
+  <div class="page-dot" onclick="showPage('page-skills')" title="Skills" aria-label="Skills"></div>
+  <div class="page-dot" onclick="showPage('page-connect')" title="Connect" aria-label="Connect"></div>
+</div>
+
+<!-- Print Button -->
+<button id="print-btn" onclick="window.print()" aria-label="Print or save as PDF">&#128438;&nbsp; Print Edition</button>
+
+<!-- ===================================================
+     SPREAD OVERLAY
+=================================================== -->
+<div id="spread-overlay" role="dialog" aria-modal="true">
+  <div id="spread-backdrop"></div>
+  <div id="spread-panel">
+    <div class="spread-drag-handle"></div>
+    <div class="spread-header">
+      <span class="spread-edition-tag" id="spread-edition-tag">Akash Yadav's Journal &middot; Volume I</span>
+      <button class="spread-close" onclick="closeSpread()" aria-label="Close">&times;</button>
+    </div>
+    <div id="spread-content"></div>
+    <div class="spread-footer-strip">
+      <span class="spread-edition-tag">Akash Yadav's Journal &middot; <span id="spread-page-num"></span></span>
+      <div id="spread-related" style="display:flex; gap:0.5rem; flex-wrap:wrap;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==============================================
+     SPREAD TEMPLATES
+============================================== -->
+
+<!-- L&T SPREAD -->
+<template id="tpl-lt">
+<div class="spread-inner">
+  <p class="spread-top-tag">03 &middot; Field Notes &middot; Larsen &amp; Toubro &middot; Summer 2025</p>
+  <h2 class="spread-headline">Inside a Large-Scale Water Infrastructure Project</h2>
+  <p class="spread-deck">My summer at L&amp;T offered a closer look at how engineering systems, operational decisions and technology come together in the execution of infrastructure at scale.</p>
+  <p class="spread-byline">Summer Internship &middot; Larsen &amp; Toubro &middot; June&ndash;July 2025 &middot; Indore, Madhya Pradesh</p>
+  <div class="spread-rule"></div>
+  <div class="spread-meta-bar">
+    <div class="spread-meta-item"><span class="spread-meta-key">Timeline</span><span class="spread-meta-val">June &ndash; July 2025</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Location</span><span class="spread-meta-val">Indore, Madhya Pradesh</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Project</span><span class="spread-meta-val">Narmada&ndash;Kshipra Link</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Project Cost</span><span class="spread-meta-val">&#8377;65,000 Crore</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Coverage</span><span class="spread-meta-val">163 Villages &middot; ~30,000 ha</span></div>
+  </div>
+  <div class="spread-stat-row">
+    <div class="stat-badge"><span class="stat-num">&#8377;65K</span><span class="stat-label">Crore Project Cost</span></div>
+    <div class="stat-badge"><span class="stat-num">163</span><span class="stat-label">Villages Benefitted</span></div>
+    <div class="stat-badge"><span class="stat-num">~30,000</span><span class="stat-label">Hectares Coverage</span></div>
+    <div class="stat-badge"><span class="stat-num">6</span><span class="stat-label">Break Pressure Tanks</span></div>
+  </div>
+  <div class="spread-three-col">
+    <div class="spread-body">
+      <p class="drop-cap">During my summer internship at Larsen &amp; Toubro, I gained exposure to the Narmada&ndash;Kshipra Link Project — a &#8377;65,000 crore large-scale water infrastructure project designed to support water distribution across 163 villages and approximately 30,000 hectares.</p>
+      <p>My work involved studying the project's execution framework and understanding how its large-scale pipeline and multi-point distribution network was planned and operated.</p>
+      <div class="spread-pull">"Large problems are rarely solved by one discipline alone. Engineering design, technology, operations, planning and people all have to work together."</div>
+      <p>A particularly interesting part of the experience was studying the project's SCADA-based monitoring systems. I examined how operational parameters such as pumps, power consumption and water flow could be remotely monitored across six Break Pressure Tanks, giving me a practical view of how technology supports the operation of physical infrastructure.</p>
+      <p>Alongside this, I documented technical observations related to the distribution network and project execution, helping me understand how engineering design, technology, planning and operational coordination come together in infrastructure at this scale.</p>
+    </div>
+    <div class="spread-sidebar">
+      <p class="spread-kicker-section">What I Worked On</p>
+      <div class="space-y-2">
+        <div class="border-l-2 border-black pl-3 py-1"><p class="article-body text-xs"><strong>Execution Framework Study:</strong> Understanding how the Narmada-Kshipra Link Project was planned, structured and operationally managed at scale.</p></div>
+        <div class="border-l-2 border-black pl-3 py-1"><p class="article-body text-xs"><strong>SCADA Monitoring Study:</strong> Examined remote monitoring of operational parameters across 6 Break Pressure Tanks — pumps, power consumption and water flow.</p></div>
+        <div class="border-l-2 border-black pl-3 py-1"><p class="article-body text-xs"><strong>Distribution Network Documentation:</strong> Technical observations on pipeline architecture and multi-point distribution network design and operation.</p></div>
+      </div>
+      <p class="spread-kicker-section">What I Learned</p>
+      <p class="article-body text-xs">A decision made in one part of a system can affect several others. That systems perspective is something I have carried into the way I approach problems beyond engineering as well.</p>
+      <p class="spread-kicker-section">Tools &amp; Exposure</p>
+      <div class="flex flex-wrap gap-1 mt-1">
+        <span class="spread-tag">SCADA Systems</span><span class="spread-tag">Infrastructure Execution</span><span class="spread-tag">Pipeline Networks</span><span class="spread-tag">Technical Documentation</span>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+
+<!-- T&P SPREAD -->
+<template id="tpl-tp">
+<div class="spread-inner">
+  <p class="spread-top-tag">04 &middot; Leadership Notes &middot; Training &amp; Placement Cell &middot; BIET Jhansi</p>
+  <h2 class="spread-headline">From Coordinator to Secretary: Learning Leadership Through Execution</h2>
+  <p class="spread-deck">A journey from Coordinator to Deputy Secretary to Secretary — and what changes when responsibility grows.</p>
+  <p class="spread-byline">Training &amp; Placement Cell &middot; BIET Jhansi &middot; September 2024 &ndash; Present</p>
+  <div class="spread-rule"></div>
+  <div class="spread-meta-bar">
+    <div class="spread-meta-item"><span class="spread-meta-key">Current Role</span><span class="spread-meta-val">Secretary</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Journey</span><span class="spread-meta-val">Coordinator &rarr; Deputy Secretary &rarr; Secretary</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Team Size</span><span class="spread-meta-val">60+ Members</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Students Covered</span><span class="spread-meta-val">1,200+</span></div>
+  </div>
+  <div class="spread-stat-row">
+    <div class="stat-badge"><span class="stat-num">60+</span><span class="stat-label">Team Members</span></div>
+    <div class="stat-badge"><span class="stat-num">1,200+</span><span class="stat-label">Students Covered</span></div>
+    <div class="stat-badge"><span class="stat-num">3</span><span class="stat-label">Stages of Responsibility</span></div>
+    <div class="stat-badge"><span class="stat-num">59</span><span class="stat-label">Pool Drive Selections</span></div>
+  </div>
+  <div class="spread-three-col">
+    <div class="spread-body">
+      <p class="drop-cap">My journey with BIET Jhansi's Training &amp; Placement Cell began as a Coordinator and gradually evolved into larger responsibilities — first as Deputy Secretary and subsequently Secretary. The progression changed my understanding of leadership.</p>
+      <p>As responsibilities increased, the work became less about completing an assigned task and more about ensuring that people, communication and processes moved together. Today, the Cell works through a 60+ member student team and serves a student community of 1,200+, facilitating placement and career opportunities while coordinating between students, recruiters, faculty and the institute administration.</p>
+      <div class="spread-pull">"Leadership looks very different when the outcome depends on other people."</div>
+      <p>My responsibilities have involved placement operations, team coordination, institutional communication and documentation, supporting recruitment activities, and working with the leadership of the Cell on decisions affecting its functioning.</p>
+      <p><strong>A Milestone: BIET's Inaugural Pool Campus Drive.</strong> Unlike a regular placement activity, this required coordination across recruiters, multiple participating institutions, faculty representatives, students and our own organising team. With a limited preparation window, the challenge wasn't simply creating a schedule — it was making sure that several moving parts worked together.</p>
+      <p>While the overall proceedings were monitored by the faculty leadership of the T&amp;P Cell, I supervised the operational execution with my team, coordinating responsibilities and helping ensure that the drive progressed as planned. The drive eventually resulted in <strong>59 selections across participating institutions, including 28 students from BIET Jhansi</strong>.</p>
+    </div>
+    <div class="spread-sidebar">
+      <p class="spread-kicker-section">Core Responsibilities</p>
+      <div class="space-y-2">
+        <div class="border-l-2 border-black pl-3 py-1"><p class="article-body text-xs"><strong>Placement Operations:</strong> Supporting and coordinating placement activities, recruitment drives and related communications.</p></div>
+        <div class="border-l-2 border-black pl-3 py-1"><p class="article-body text-xs"><strong>Team Coordination:</strong> Managing a 60+ member student volunteer team across activities and events.</p></div>
+        <div class="border-l-2 border-black pl-3 py-1"><p class="article-body text-xs"><strong>Institutional Communication:</strong> Coordinating between students, recruiters, faculty and administration.</p></div>
+        <div class="border-l-2 border-black pl-3 py-1"><p class="article-body text-xs"><strong>Pool Campus Drive:</strong> Operational supervision of BIET's inaugural multi-institute recruitment drive — 59 selections.</p></div>
+      </div>
+      <p class="spread-kicker-section">What I Learned</p>
+      <p class="article-body text-xs">Working in the T&amp;P Cell has taught me to communicate across different stakeholders, delegate without losing visibility, make decisions when information is incomplete, respond when plans change, and take responsibility for an outcome that no single person can deliver alone.</p>
+      <p class="spread-kicker-section">Skills Demonstrated</p>
+      <div class="flex flex-wrap gap-1 mt-1">
+        <span class="spread-tag">Team Leadership</span><span class="spread-tag">Stakeholder Management</span><span class="spread-tag">Event Execution</span><span class="spread-tag">Institutional Communication</span><span class="spread-tag">Operations</span>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+
+<!-- HOSPITALITY SPREAD -->
+<template id="tpl-hosp">
+<div class="spread-inner">
+  <p class="spread-top-tag">05 &middot; Case Study 01 &middot; Hospitality Sector &middot; Business Analysis</p>
+  <h2 class="spread-headline">Where Does the Revenue Go?</h2>
+  <p class="spread-deck">Optimizing Revenue Leakage &amp; Profitability in the Hospitality Sector — where is potential revenue being lost, and what could be changed to capture more of it?</p>
+  <p class="spread-byline">Approach: Business Analysis &middot; Secondary Research &middot; Data Analytics &middot; Tools: Tableau &middot; Excel &middot; Duration: 3 Months</p>
+  <div class="spread-rule"></div>
+  <div class="spread-meta-bar">
+    <div class="spread-meta-item"><span class="spread-meta-key">Duration</span><span class="spread-meta-val">3 Months</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Records Analysed</span><span class="spread-meta-val">10,000+</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Cities</span><span class="spread-meta-val">Delhi · Mumbai · Hyderabad · Bangalore</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Room Categories</span><span class="spread-meta-val">4</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Projected Uplift</span><span class="spread-meta-val">~15% Revenue Upside*</span></div>
+  </div>
+  <div class="spread-stat-row">
+    <div class="stat-badge"><span class="stat-num">10K+</span><span class="stat-label">Booking Records Analysed</span></div>
+    <div class="stat-badge"><span class="stat-num">4</span><span class="stat-label">Cities Studied</span></div>
+    <div class="stat-badge"><span class="stat-num">4</span><span class="stat-label">Room Categories</span></div>
+    <div class="stat-badge"><span class="stat-num">~15%</span><span class="stat-label">Projected Revenue Upside</span></div>
+  </div>
+  <div class="spread-three-col">
+    <div class="spread-body">
+      <p class="drop-cap">Working with 10,000+ booking records across hotel properties in Delhi, Mumbai, Hyderabad and Bangalore, I analysed booking behaviour, occupancy, room categories, pricing and revenue performance to identify patterns behind underperformance.</p>
+      <p>But identifying the patterns was only one part of the project. I combined the internal booking analysis with competitor-pricing research and market observations to understand where pricing, occupancy and service utilisation were not working together effectively.</p>
+      <div class="spread-pull">"Analysis becomes valuable when it changes the question from 'What happened?' to 'What should we do next?'"</div>
+      <p>The analysis highlighted opportunities across areas such as weekday monetisation, room-category pricing, service bundling and utilisation, with recommendations varying by market and customer segment rather than applying one solution everywhere.</p>
+      <p>Tableau dashboards were then used to bring these findings together — tracking ADR, RevPAR and occupancy, and making it easier to compare performance across cities, properties and room categories.</p>
+      <p class="text-xs italic opacity-60 mt-2">*Based on project recommendations and scenario assumptions; projected, not realised revenue.</p>
+    </div>
+    <div class="spread-sidebar">
+      <p class="spread-kicker-section">From Data &rarr; Decision</p>
+      <ul class="step-list">
+        <li><span class="step-num">01 &middot;</span><span><strong>Diagnose.</strong> Analysed booking records to identify patterns in occupancy, pricing and realised revenue.</span></li>
+        <li><span class="step-num">02 &middot;</span><span><strong>Benchmark.</strong> Used secondary research and competitor pricing to understand market positioning.</span></li>
+        <li><span class="step-num">03 &middot;</span><span><strong>Segment.</strong> Compared performance across cities, properties, weekdays/weekends and room categories.</span></li>
+        <li><span class="step-num">04 &middot;</span><span><strong>Recommend.</strong> Developed pricing, bundling and utilisation interventions based on underlying performance gaps.</span></li>
+        <li><span class="step-num">05 &middot;</span><span><strong>Evaluate.</strong> Assessed recommendations through projected uplift, ROI and scenario-based business justification.</span></li>
+      </ul>
+      <p class="spread-kicker-section">Tools &amp; Methods</p>
+      <div class="flex flex-wrap gap-1 mt-1">
+        <span class="spread-tag">Tableau</span><span class="spread-tag">Excel</span><span class="spread-tag">Secondary Research</span><span class="spread-tag">EDA</span><span class="spread-tag">Competitor Benchmarking</span><span class="spread-tag">Revenue Management</span>
+      </div>
+    </div>
+  </div>
+</div>
+</template>
+
+<!-- EPSILON SPREAD -->
+<template id="tpl-eps">
+<div class="spread-inner">
+  <p class="spread-top-tag">06 &middot; Case Study 02 &middot; Epsilon 6.0 &middot; SSCBS, University of Delhi</p>
+  <h2 class="spread-headline">Strategy Under Constraints</h2>
+  <p class="spread-deck">Determine how a platform should allocate resources across content opportunities while operating under strict financial and platform constraints — Top 20 among 250+ teams nationally.</p>
+  <p class="spread-byline">Focus: Strategy &middot; Business Analytics &middot; Decision-Making &middot; Epsilon 6.0 &middot; SSCBS, University of Delhi</p>
+  <div class="spread-rule"></div>
+  <div class="spread-meta-bar">
+    <div class="spread-meta-item"><span class="spread-meta-key">Competition</span><span class="spread-meta-val">Epsilon 6.0 &middot; SSCBS</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Teams</span><span class="spread-meta-val">250+ National Teams</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Finish</span><span class="spread-meta-val">National Top 20</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Budget Scenario I</span><span class="spread-meta-val">&#8377;700 Crore</span></div>
+    <div class="spread-meta-item"><span class="spread-meta-key">Budget Scenario II</span><span class="spread-meta-val">&#8377;1,000 Crore</span></div>
+  </div>
+  <div class="spread-stat-row">
+    <div class="stat-badge"><span class="stat-num">Top 20</span><span class="stat-label">National Finish</span></div>
+    <div class="stat-badge"><span class="stat-num">250+</span><span class="stat-label">Competing Teams</span></div>
+    <div class="stat-badge"><span class="stat-num">&#8377;700Cr</span><span class="stat-label">Scenario I</span></div>
+    <div class="stat-badge"><span class="stat-num">&#8377;1,000Cr</span><span class="stat-label">Scenario II</span></div>
+  </div>
+  <div class="spread-three-col">
+    <div class="spread-body">
+      <p class="drop-cap">At Epsilon 6.0, our team was presented with an OTT content-acquisition problem: determine how a platform should allocate its resources across content opportunities while operating under strict financial and platform constraints.</p>
+      <p>The challenge was not simply to identify the most attractive content. We had to determine which combination of investments created the strongest strategic outcome within the available budget.</p>
+      <div class="spread-pull">"A good option is not necessarily the right decision. When resources are constrained, every choice carries an opportunity cost."</div>
+      <p>We worked through two scenarios — &#8377;700 crore and &#8377;1,000 crore — analysing variables including content performance, watch hours, merchandise revenue, geographic reach and other quantitative constraints. Statistical analysis, exploratory data analysis and correlation-based evaluation helped us identify relationships within the available data, while Tableau was used to visualise performance and cost-effectiveness.</p>
+      <p>But the final task was ultimately a decision problem: given limited resources, where should the platform invest — and what should it leave out? Our recommendations combined quantitative findings with strategic considerations around market penetration, content acquisition and resource allocation. The approach helped our team secure a Top 20 finish among 250+ participating teams nationally.</p>
+    </div>
+    <div class="spread-sidebar">
+      <p class="spread-kicker-section">How We Approached It</p>
+      <ul class="step-list">
+        <li><span class="step-num">01 &middot;</span><span>Understand the strategic objective and constraints of the content-acquisition problem.</span></li>
+        <li><span class="step-num">02 &middot;</span><span>Analyse content performance, watch hours, revenue and geographic variables.</span></li>
+        <li><span class="step-num">03 &middot;</span><span>Compare opportunities based on potential return and strategic relevance.</span></li>
+        <li><span class="step-num">04 &middot;</span><span>Prioritise within &#8377;700 Cr and &#8377;1,000 Cr budget constraints.</span></li>
+        <li><span class="step-num">05 &middot;</span><span>Recommend a content-acquisition strategy supported by quantitative evidence.</span></li>
+      </ul>
+      <p class="spread-kicker-section">Methods &amp; Tools</p>
+      <div class="flex flex-wrap gap-1 mt-1">
+        <span class="spread-tag">Statistical Analysis</span><span class="spread-tag">EDA</span><span class="spread-tag">Correlation Analysis</span><span class="spread-tag">Tableau</span><span class="spread-tag">Financial Modelling</span><span class="spread-tag">Content Valuation</span><span class="spread-tag">Budget Optimisation</span>
+      </div>
+      <p class="spread-kicker-section">What I Learned</p>
+      <p class="article-body text-xs">Epsilon made me think more deliberately about prioritisation — what deserves investment, what can wait, and what must be left out even when it looks attractive.</p>
+    </div>
+  </div>
+</div>
+</template>
+
+<!-- ===== SCRIPTS ===== -->
+<script>
+  // ===== PROGRESS BAR =====
+  var progressBar = document.getElementById('progress-bar');
+  window.addEventListener('scroll', function() {
+    var scrollTop = window.scrollY || document.documentElement.scrollTop;
+    var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = docHeight > 0 ? Math.min((scrollTop / docHeight) * 100, 100) : 0;
+    progressBar.style.width = pct + '%';
+  }, { passive: true });
+
+  // ===== MULTI-PAGE SYSTEM =====
+  var pageIds = ['page-cover','page-about','page-work','page-projects','page-learning','page-skills','page-connect'];
+  var currentPage = 'page-cover';
+
+  function showPage(pageId) {
+    if (pageId === currentPage) return;
+    var outgoing = document.getElementById(currentPage);
+    if (outgoing) {
+      outgoing.classList.remove('visible');
+      setTimeout(function() {
+        outgoing.classList.remove('active');
+        activatePage(pageId);
+      }, 320);
+    } else {
+      activatePage(pageId);
+    }
+    currentPage = pageId;
+    // Nav buttons
+    document.querySelectorAll('.chapter-nav-btn').forEach(function(btn) {
+      btn.classList.toggle('active-nav', btn.dataset.page === pageId);
+    });
+    // Page dots
+    var idx = pageIds.indexOf(pageId);
+    document.querySelectorAll('.page-dot').forEach(function(dot, i) {
+      dot.classList.toggle('active-dot', i === idx);
+    });
+  }
+
+  function activatePage(pageId) {
+    var page = document.getElementById(pageId);
+    if (!page) return;
+    page.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    setTimeout(function() {
+      page.classList.add('visible');
+      // trigger fade-up animations for new page
+      page.querySelectorAll('.fade-up').forEach(function(el) {
+        el.classList.add('visible');
+      });
+    }, 30);
+  }
+
+  // Initial page load
+  window.addEventListener('load', function() {
+    var first = document.getElementById('page-cover');
+    if (first) {
+      first.classList.add('active');
+      setTimeout(function() {
+        first.classList.add('visible');
+        first.querySelectorAll('.fade-up').forEach(function(el) { el.classList.add('visible'); });
+      }, 80);
+    }
+  });
+
+  // ===== FADE-UP for visible pages =====
+  if ('IntersectionObserver' in window) {
+    var fadeObs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('visible'); fadeObs.unobserve(e.target); } });
+    }, { threshold: 0.06, rootMargin: '0px 0px -20px 0px' });
+    document.querySelectorAll('.fade-up').forEach(function(el) { fadeObs.observe(el); });
+  }
+
+  // ===== TICKER =====
+  (function() {
+    var t = document.getElementById('ticker-track');
+    if (t) t.innerHTML = t.innerHTML + t.innerHTML;
+  })();
+
+  // ===================================================
+  // SPREAD SYSTEM
+  // ===================================================
+  var spreadConfig = {
+    'lt':   { tag: "Akash Yadav's Journal · 03 · Field Notes", page: "Field Notes — L&T", related: [['tp','Leadership Notes'],['hosp','Case Study 01'],['eps','Case Study 02']] },
+    'tp':   { tag: "Akash Yadav's Journal · 04 · Leadership Notes", page: "Leadership Notes — T&P Cell", related: [['lt','Field Notes'],['hosp','Case Study 01'],['eps','Case Study 02']] },
+    'hosp': { tag: "Akash Yadav's Journal · 05 · Case Study 01", page: "Case Study 01 — Hospitality", related: [['eps','Case Study 02'],['lt','Field Notes'],['tp','Leadership Notes']] },
+    'eps':  { tag: "Akash Yadav's Journal · 06 · Case Study 02", page: "Case Study 02 — Epsilon 6.0", related: [['hosp','Case Study 01'],['lt','Field Notes'],['tp','Leadership Notes']] },
+  };
+  var currentSpread = null;
+
+  function openSpread(id) {
+    var tpl = document.getElementById('tpl-' + id);
+    if (!tpl) return;
+    var cfg = spreadConfig[id] || {};
+    document.getElementById('spread-content').innerHTML = tpl.innerHTML;
+    document.getElementById('spread-content').scrollTop = 0;
+    document.getElementById('spread-edition-tag').innerHTML = cfg.tag || "Akash Yadav's Journal";
+    document.getElementById('spread-page-num').textContent = cfg.page || '';
+    var rel = document.getElementById('spread-related');
+    rel.innerHTML = '';
+    (cfg.related || []).forEach(function(r) {
+      var btn = document.createElement('button');
+      btn.className = 'spread-related-btn';
+      btn.textContent = r[1];
+      btn.onclick = function(e) { e.stopPropagation(); switchSpread(r[0]); };
+      rel.appendChild(btn);
+    });
+    currentSpread = id;
+    document.getElementById('spread-overlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function switchSpread(id) {
+    var tpl = document.getElementById('tpl-' + id);
+    if (!tpl) return;
+    var cfg = spreadConfig[id] || {};
+    var content = document.getElementById('spread-content');
+    content.style.opacity = '0';
+    content.style.transition = 'opacity 0.18s ease';
+    setTimeout(function() {
+      content.innerHTML = tpl.innerHTML;
+      content.scrollTop = 0;
+      content.style.opacity = '1';
+      document.getElementById('spread-edition-tag').innerHTML = cfg.tag || "Akash Yadav's Journal";
+      document.getElementById('spread-page-num').textContent = cfg.page || '';
+      var rel = document.getElementById('spread-related');
+      rel.innerHTML = '';
+      (cfg.related || []).forEach(function(r) {
+        var btn = document.createElement('button');
+        btn.className = 'spread-related-btn';
+        btn.textContent = r[1];
+        btn.onclick = function(e) { e.stopPropagation(); switchSpread(r[0]); };
+        rel.appendChild(btn);
+      });
+      currentSpread = id;
+    }, 180);
+  }
+
+  function closeSpread() {
+    document.getElementById('spread-overlay').classList.remove('active');
+    document.body.style.overflow = '';
+    setTimeout(function() { document.getElementById('spread-content').innerHTML = ''; }, 460);
+    currentSpread = null;
+  }
+
+  document.getElementById('spread-backdrop').addEventListener('click', closeSpread);
+  document.getElementById('spread-panel').addEventListener('click', function(e) { e.stopPropagation(); });
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && currentSpread) closeSpread(); });
+</script>
+
+</body>
+</html>
