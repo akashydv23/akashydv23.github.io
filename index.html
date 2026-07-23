@@ -182,6 +182,78 @@
     .editors-quote-text { font-family: 'Playfair Display', serif; font-size: clamp(0.98rem, 2.1vw, 1.38rem); font-style: italic; font-weight: 700; line-height: 1.65; position: relative; z-index: 1; }
     .editors-quote-attr { font-family: 'Merriweather', serif; font-size: 0.63rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; margin-top: 1.2rem; opacity: 0.55; position: relative; z-index: 1; }
 
+    /* ===== INTERACTIVE QUOTE ===== */
+    .iq-wrap {
+      position: relative; overflow: hidden; cursor: default;
+      background: rgba(0,0,0,0.008); border: 2px solid #1a1a1a;
+      padding: 2.5rem 3rem; text-align: center;
+      animation: iq-border-breathe 5s ease-in-out infinite;
+    }
+    .iq-wrap.cover-iq { border: 3px double #1a1a1a; padding: 2rem 2.5rem; margin-bottom: 1.5rem; }
+    @keyframes iq-border-breathe {
+      0%,100% { box-shadow: none; }
+      50% { box-shadow: 0 0 0 3px rgba(0,0,0,0.06), 4px 4px 0 rgba(0,0,0,0.05); }
+    }
+    /* Giant watermark quote mark */
+    .iq-wrap::before {
+      content: '\201C';
+      font-family: 'Playfair Display', serif;
+      font-size: 18rem; font-weight: 900;
+      color: rgba(0,0,0,0.025);
+      position: absolute; top: -5rem; left: -0.5rem;
+      line-height: 1; pointer-events: none;
+      transition: color 0.5s ease, transform 0.6s ease;
+      transform-origin: top left;
+    }
+    .iq-wrap:hover::before {
+      color: rgba(0,0,0,0.05);
+      transform: scale(1.08) rotate(-2deg);
+    }
+    /* Shimmer sweep on hover */
+    .iq-wrap::after {
+      content: ''; position: absolute;
+      top: 0; left: -120%; width: 55%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
+      transform: skewX(-20deg); pointer-events: none;
+    }
+    .iq-wrap:hover::after { animation: iq-shimmer 0.75s ease forwards; }
+    @keyframes iq-shimmer {
+      0% { left: -120%; }
+      100% { left: 170%; }
+    }
+    /* Quote text */
+    .iq-text {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1rem, 2.3vw, 1.42rem);
+      font-style: italic; font-weight: 700;
+      line-height: 1.68; position: relative; z-index: 1;
+    }
+    .iq-attr {
+      font-family: 'Merriweather', serif;
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      margin-top: 1.2rem; opacity: 0.48;
+      position: relative; z-index: 1;
+    }
+    /* Individual word spans — reveal + hover */
+    .q-word {
+      display: inline-block; padding: 0 1.5px;
+      position: relative; z-index: 1; cursor: default;
+      opacity: 0; transform: translateY(10px);
+      transition: opacity 0.45s ease, transform 0.45s ease,
+                  text-shadow 0.2s ease, color 0.2s ease;
+    }
+    .q-word.q-revealed {
+      opacity: 1; transform: translateY(0);
+    }
+    .q-word:hover {
+      transform: translateY(-4px) scale(1.07) !important;
+      text-shadow: 0 5px 14px rgba(0,0,0,0.14) !important;
+      color: #000;
+      transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1),
+                  text-shadow 0.18s ease, color 0.18s ease !important;
+    }
+
     /* ===== STEP LIST ===== */
     .step-list { list-style: none; padding: 0; margin: 0; }
     .step-list li { display: flex; align-items: baseline; gap: 0.75rem; padding: 0.5rem 0; border-bottom: 1px dashed rgba(0,0,0,0.15); font-family: 'Merriweather', serif; font-size: 0.75rem; line-height: 1.7; }
@@ -334,6 +406,13 @@
     <!-- Ornament image -->
     <div class="border border-black mb-6">
       <img src="assets/masthead_ornament.png" alt="Akash Yadav's Journal — decorative masthead ornament" class="masthead-img" />
+    </div>
+
+    <!-- Featured Quote — prominent on cover -->
+    <div id="cover-quote" class="iq-wrap cover-iq fade-up">
+      <div style="font-family:'Merriweather',serif;font-size:0.5rem;font-weight:700;letter-spacing:0.25em;text-transform:uppercase;opacity:0.32;margin-bottom:0.75rem;position:relative;z-index:1;">From the Editor's Desk</div>
+      <p class="iq-text">&ldquo;My story won&rsquo;t end at &lsquo;he had potential,&rsquo; or &lsquo;he had a bright future,&rsquo; or &lsquo;he was destined for greatness.&rsquo; I&rsquo;ll go ahead and actually become all of that. I&rsquo;ll live out my potential and reach the highest level I possibly can.&rdquo;</p>
+      <p class="iq-attr">&mdash; Akash Yadav &nbsp;&middot;&nbsp; By me, for me.</p>
     </div>
 
     <!-- Table of Contents -->
@@ -809,15 +888,12 @@
   <!-- ==================== PAGE 07: CONNECT ==================== -->
   <div id="page-connect" class="page-section">
 
-    <!-- Editor's Quote - full width -->
-    <div class="fade-up mb-6">
+    <!-- Editor's Quote - interactive -->
+    <div class="mb-6">
       <span class="chapter-label text-center block mb-3">12 &middot; From the Editor's Desk</span>
-      <div class="editors-quote-wrap">
-        <p class="editors-quote-text">
-          "My story won't end at 'he had potential,' or 'he had a bright future,' or 'he was destined for greatness.'<br/>
-          I'll go ahead and actually become all of that. I'll live out my potential and reach the highest level I possibly can."
-        </p>
-        <p class="editors-quote-attr">&mdash; Akash Yadav &nbsp;&middot;&nbsp; By me, for me.</p>
+      <div id="connect-quote" class="iq-wrap fade-up">
+        <p class="iq-text">&ldquo;My story won&rsquo;t end at &lsquo;he had potential,&rsquo; or &lsquo;he had a bright future,&rsquo; or &lsquo;he was destined for greatness.&rsquo; I&rsquo;ll go ahead and actually become all of that. I&rsquo;ll live out my potential and reach the highest level I possibly can.&rdquo;</p>
+        <p class="iq-attr">&mdash; Akash Yadav &nbsp;&middot;&nbsp; By me, for me.</p>
       </div>
     </div>
 
@@ -1164,6 +1240,27 @@
     });
   }
 
+  // ===== INTERACTIVE QUOTE — word split + staggered reveal =====
+  function initInteractiveQuote(wrapperId) {
+    var wrap = document.getElementById(wrapperId);
+    if (!wrap) return;
+    var textEl = wrap.querySelector('.iq-text');
+    if (!textEl || textEl.dataset.split) return; // don't split twice
+    textEl.dataset.split = '1';
+    // Split text into word spans
+    var raw = textEl.innerHTML;
+    // tokenise on whitespace, preserving space gaps
+    var parts = raw.split(/(\s+)/);
+    textEl.innerHTML = parts.map(function(p) {
+      return /^\s+$/.test(p) ? p : '<span class="q-word">' + p + '</span>';
+    }).join('');
+    // Staggered reveal
+    var words = textEl.querySelectorAll('.q-word');
+    words.forEach(function(w, i) {
+      setTimeout(function() { w.classList.add('q-revealed'); }, 120 + i * 48);
+    });
+  }
+
   function activatePage(pageId) {
     var page = document.getElementById(pageId);
     if (!page) return;
@@ -1171,10 +1268,11 @@
     window.scrollTo({ top: 0, behavior: 'instant' });
     setTimeout(function() {
       page.classList.add('visible');
-      // trigger fade-up animations for new page
       page.querySelectorAll('.fade-up').forEach(function(el) {
         el.classList.add('visible');
       });
+      // Trigger quote animation per page
+      if (pageId === 'page-connect') initInteractiveQuote('connect-quote');
     }, 30);
   }
 
@@ -1186,6 +1284,8 @@
       setTimeout(function() {
         first.classList.add('visible');
         first.querySelectorAll('.fade-up').forEach(function(el) { el.classList.add('visible'); });
+        // Trigger cover quote animation with extra delay for drama
+        setTimeout(function() { initInteractiveQuote('cover-quote'); }, 300);
       }, 80);
     }
   });
