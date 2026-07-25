@@ -59,7 +59,7 @@
     /* ===== CHAPTER NAV ===== */
     #chapter-nav { position: sticky; top: 0; z-index: 999; background: #f4f1ea; border-top: 2px solid #1a1a1a; border-bottom: 2px solid #1a1a1a; }
     .chapter-nav-inner { display: flex; justify-content: center; flex-wrap: wrap; max-width: 1280px; margin: 0 auto; }
-    .chapter-nav-btn { display: flex; align-items: center; gap: 6px; padding: 7px 15px; border: none; border-right: 1px solid rgba(0,0,0,0.15); background: transparent; cursor: pointer; color: #1a1a1a; transition: background 0.18s ease, color 0.18s ease; white-space: nowrap; }
+    .chapter-nav-btn { display: flex; align-items: center; gap: 6px; padding: 7px 15px; border: none; border-right: 1px solid rgba(0,0,0,0.15); background: transparent; cursor: pointer; color: #1a1a1a; transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1); white-space: nowrap; }
     .chapter-nav-btn:first-child { border-left: 1px solid rgba(0,0,0,0.15); }
     .chapter-num-badge { font-family: 'Merriweather', serif; font-size: 0.49rem; font-weight: 700; letter-spacing: 0.06em; opacity: 0.4; }
     .chapter-nav-name { font-family: 'Playfair Display', serif; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
@@ -71,6 +71,33 @@
     .page-section { display: none; opacity: 0; transform: translateY(14px); transition: opacity 0.38s ease, transform 0.38s ease; padding: 2.5rem 0 6rem; min-height: calc(100vh - 110px); }
     .page-section.active { display: block; }
     .page-section.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== VERTICAL SIDEBAR (DESKTOP) ===== */
+    @media (min-width: 1024px) {
+      #chapter-nav {
+        position: fixed; top: 0; left: 0; bottom: 0; width: 170px;
+        border-top: none; border-bottom: none; border-right: 2px solid #1a1a1a;
+        display: flex; flex-direction: column; justify-content: center;
+      }
+      .chapter-nav-inner {
+        flex-direction: column; width: 100%; align-items: stretch; justify-content: center; max-width: 100%;
+      }
+      .chapter-nav-btn {
+        border-right: none; border-left: none; border-bottom: 1px solid rgba(0,0,0,0.15);
+        padding: 16px 20px; 
+      }
+      .chapter-nav-btn:first-child { border-left: none; border-top: 1px solid rgba(0,0,0,0.15); }
+      .chapter-nav-btn:hover {
+        transform: translateX(15px) scale(1.02);
+        box-shadow: -6px 8px 15px rgba(0,0,0,0.2);
+        z-index: 10;
+        border-bottom-color: transparent;
+      }
+      .chapter-nav-btn.active-nav {
+        transform: translateX(8px);
+      }
+      .pages-container, .ticker-outer { margin-left: 170px; }
+    }
 
     /* ===== JOURNAL MASTHEAD ===== */
     .journal-name-sup { font-family: 'Playfair Display', serif; font-size: clamp(0.85rem, 2.6vw, 1.35rem); font-weight: 700; letter-spacing: 0.4em; text-transform: uppercase; }
